@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3452BF47-2053-40B4-9824-31A09185DEC8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Network.Data</RootNamespace>
+    <AssemblyName>Network.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\INetworkContext.cs" />
+    <Compile Include="Context\NetworkContext.cs" />
+    <Compile Include="Migrations\201702160550135_firstChange.cs" />
+    <Compile Include="Migrations\201702160550135_firstChange.Designer.cs">
+      <DependentUpon>201702160550135_firstChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161442061_Location.LocationArea.Change.cs" />
+    <Compile Include="Migrations\201702161442061_Location.LocationArea.Change.Designer.cs">
+      <DependentUpon>201702161442061_Location.LocationArea.Change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161811039_Location.LocationTaxToFax.Change.cs" />
+    <Compile Include="Migrations\201702161811039_Location.LocationTaxToFax.Change.Designer.cs">
+      <DependentUpon>201702161811039_Location.LocationTaxToFax.Change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702170215307_Property.Location.Change.cs" />
+    <Compile Include="Migrations\201702170215307_Property.Location.Change.Designer.cs">
+      <DependentUpon>201702170215307_Property.Location.Change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702170617236_afterextractRar.cs" />
+    <Compile Include="Migrations\201702170617236_afterextractRar.Designer.cs">
+      <DependentUpon>201702170617236_afterextractRar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Impl\ContractRepository.cs" />
+    <Compile Include="Repository\Impl\CostRepository.cs" />
+    <Compile Include="Repository\Impl\DocumentRepository.cs" />
+    <Compile Include="Repository\Impl\ECMRepository.cs" />
+    <Compile Include="Repository\Impl\FileAttachmentRepository.cs" />
+    <Compile Include="Repository\Impl\IntegrityPlanRepository.cs" />
+    <Compile Include="Repository\Impl\LocationRepository.cs" />
+    <Compile Include="Repository\Impl\PartnerRepository.cs" />
+    <Compile Include="Repository\Impl\PersonRepository.cs" />
+    <Compile Include="Repository\Impl\Repository.cs" />
+    <Compile Include="Repository\Interfaces\IContractRepository.cs" />
+    <Compile Include="Repository\Interfaces\ICostRepository.cs" />
+    <Compile Include="Repository\Interfaces\IDocumentRepository.cs" />
+    <Compile Include="Repository\Interfaces\IECMRepository.cs" />
+    <Compile Include="Repository\Interfaces\IFileAttachmentRepository.cs" />
+    <Compile Include="Repository\Interfaces\IIntegrityPlanRepository.cs" />
+    <Compile Include="Repository\Interfaces\ILocationRepository.cs" />
+    <Compile Include="Repository\Interfaces\IPartnerRepository.cs" />
+    <Compile Include="Repository\Interfaces\IPersonRepository.cs" />
+    <Compile Include="Repository\Interfaces\IRepository.cs" />
+    <Compile Include="UoW\IUnitOfWork.cs" />
+    <Compile Include="UoW\UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Network.Common\Network.Common.csproj">
+      <Project>{B0B52EFD-2C08-4CEB-9263-AC49F7B159AE}</Project>
+      <Name>Network.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.Domain\Network.Domain.csproj">
+      <Project>{54d32c2e-ea50-4c74-88b0-f63cacf3f69f}</Project>
+      <Name>Network.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702160550135_firstChange.resx">
+      <DependentUpon>201702160550135_firstChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161442061_Location.LocationArea.Change.resx">
+      <DependentUpon>201702161442061_Location.LocationArea.Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161811039_Location.LocationTaxToFax.Change.resx">
+      <DependentUpon>201702161811039_Location.LocationTaxToFax.Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170215307_Property.Location.Change.resx">
+      <DependentUpon>201702170215307_Property.Location.Change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170617236_afterextractRar.resx">
+      <DependentUpon>201702170617236_afterextractRar.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

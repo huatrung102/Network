@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Network.Domain.Entity.Contract>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Document.DocumentNumber)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.Partner.PartnerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractDeposit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractMoneyType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractValidDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractInvalidDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractSchedulePayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IntegrityPlanType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Document.DocumentNumber)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Partner.PartnerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractDeposit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractMoneyType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractValidDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractInvalidDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContractSchedulePayment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IntegrityPlanType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+      
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ContractId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ContractId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ContractId })
+        </td>
+    </tr>
+}
+
+</table>

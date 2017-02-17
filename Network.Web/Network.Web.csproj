@@ -1,0 +1,687 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{009E985C-956C-4395-9E8A-2B1E986828EE}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Network.Web</RootNamespace>
+    <AssemblyName>Network.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RouteJs, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RouteJs.Mvc5.2.1.0\lib\net45\RouteJs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RouteJs.Mvc5, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RouteJs.Mvc5.2.1.0\lib\net45\RouteJs.Mvc5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\authenticate\manage.js" />
+    <Content Include="app\home\view.html" />
+    <Content Include="app\home\view.js" />
+    <Content Include="app\main.js" />
+    <Content Include="app\shell.html" />
+    <Content Include="app\shell.js" />
+    <Content Include="Content\css\AdminLTE.css" />
+    <Content Include="Content\css\AdminLTE.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\datepicker3.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\icheck\aero.css" />
+    <Content Include="Content\css\icheck\aero.min.css" />
+    <Content Include="Content\css\icheck\blue.css" />
+    <Content Include="Content\css\icheck\blue.min.css" />
+    <Content Include="Content\css\icheck\green.css" />
+    <Content Include="Content\css\icheck\green.min.css" />
+    <Content Include="Content\css\icheck\grey.css" />
+    <Content Include="Content\css\icheck\grey.min.css" />
+    <Content Include="Content\css\icheck\minimal.css" />
+    <Content Include="Content\css\icheck\minimal.min.css" />
+    <Content Include="Content\css\icheck\orange.css" />
+    <Content Include="Content\css\icheck\orange.min.css" />
+    <Content Include="Content\css\icheck\pink.css" />
+    <Content Include="Content\css\icheck\pink.min.css" />
+    <Content Include="Content\css\icheck\purple.css" />
+    <Content Include="Content\css\icheck\purple.min.css" />
+    <Content Include="Content\css\icheck\red.css" />
+    <Content Include="Content\css\icheck\red.min.css" />
+    <Content Include="Content\css\icheck\yellow.css" />
+    <Content Include="Content\css\icheck\yellow.min.css" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\skins\skin-black-light.css" />
+    <Content Include="Content\css\skins\skin-black-light.min.css" />
+    <Content Include="Content\css\skins\skin-black.css" />
+    <Content Include="Content\css\skins\skin-black.min.css" />
+    <Content Include="Content\css\skins\skin-blue-light.css" />
+    <Content Include="Content\css\skins\skin-blue-light.min.css" />
+    <Content Include="Content\css\skins\skin-blue.css" />
+    <Content Include="Content\css\skins\skin-blue.min.css" />
+    <Content Include="Content\css\skins\skin-green-light.css" />
+    <Content Include="Content\css\skins\skin-green-light.min.css" />
+    <Content Include="Content\css\skins\skin-green.css" />
+    <Content Include="Content\css\skins\skin-green.min.css" />
+    <Content Include="Content\css\skins\skin-purple-light.css" />
+    <Content Include="Content\css\skins\skin-purple-light.min.css" />
+    <Content Include="Content\css\skins\skin-purple.css" />
+    <Content Include="Content\css\skins\skin-purple.min.css" />
+    <Content Include="Content\css\skins\skin-red-light.css" />
+    <Content Include="Content\css\skins\skin-red-light.min.css" />
+    <Content Include="Content\css\skins\skin-red.css" />
+    <Content Include="Content\css\skins\skin-red.min.css" />
+    <Content Include="Content\css\skins\skin-yellow-light.css" />
+    <Content Include="Content\css\skins\skin-yellow-light.min.css" />
+    <Content Include="Content\css\skins\skin-yellow.css" />
+    <Content Include="Content\css\skins\skin-yellow.min.css" />
+    <Content Include="Content\css\skins\_all-skins.css" />
+    <Content Include="Content\css\skins\_all-skins.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\icheck\aero%402x.png" />
+    <Content Include="Content\img\icheck\aero.png" />
+    <Content Include="Content\img\icheck\blue%402x.png" />
+    <Content Include="Content\img\icheck\blue.png" />
+    <Content Include="Content\img\icheck\green%402x.png" />
+    <Content Include="Content\img\icheck\green.png" />
+    <Content Include="Content\img\icheck\grey%402x.png" />
+    <Content Include="Content\img\icheck\grey.png" />
+    <Content Include="Content\img\icheck\minimal%402x.png" />
+    <Content Include="Content\img\icheck\minimal.png" />
+    <Content Include="Content\img\icheck\orange%402x.png" />
+    <Content Include="Content\img\icheck\orange.png" />
+    <Content Include="Content\img\icheck\pink%402x.png" />
+    <Content Include="Content\img\icheck\pink.png" />
+    <Content Include="Content\img\icheck\purple%402x.png" />
+    <Content Include="Content\img\icheck\purple.png" />
+    <Content Include="Content\img\icheck\red%402x.png" />
+    <Content Include="Content\img\icheck\red.png" />
+    <Content Include="Content\img\icheck\yellow%402x.png" />
+    <Content Include="Content\img\icheck\yellow.png" />
+    <Content Include="Content\img\user.jpg" />
+    <Content Include="Content\js\app.js" />
+    <Content Include="Content\js\app.min.js" />
+    <Content Include="Content\js\init.js" />
+    <Content Include="Content\js\plugins\bootstrap\bootstrap.js" />
+    <Content Include="Content\js\plugins\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\js\plugins\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Content\js\plugins\fastclick\fastclick.js" />
+    <Content Include="Content\js\plugins\fastclick\fastclick.min.js" />
+    <Content Include="Content\js\plugins\icheck\icheck.js" />
+    <Content Include="Content\js\plugins\icheck\icheck.min.js" />
+    <Content Include="Content\js\plugins\inputmask\jquery.inputmask.bundle.js" />
+    <Content Include="Content\js\plugins\inputmask\jquery.inputmask.bundle.min.js" />
+    <Content Include="Content\js\plugins\jquery\jquery-2.2.4.js" />
+    <Content Include="Content\js\plugins\jquery\jquery-2.2.4.min.js" />
+    <Content Include="Content\js\plugins\moment\moment.js" />
+    <Content Include="Content\js\plugins\moment\moment.min.js" />
+    <Content Include="Content\js\plugins\select2\i18n\en.js" />
+    <Content Include="Content\js\plugins\select2\select2.full.js" />
+    <Content Include="Content\js\plugins\select2\select2.full.min.js" />
+    <Content Include="Content\js\plugins\select2\select2.js" />
+    <Content Include="Content\js\plugins\select2\select2.min.js" />
+    <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.js" />
+    <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\js\plugins\validator\validator.js" />
+    <Content Include="Content\js\plugins\validator\validator.min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="img\avatar.png" />
+    <Content Include="img\avatar04.png" />
+    <Content Include="img\avatar2.png" />
+    <Content Include="img\avatar3.png" />
+    <Content Include="img\avatar5.png" />
+    <Content Include="img\boxed-bg.jpg" />
+    <Content Include="img\boxed-bg.png" />
+    <Content Include="img\default-50x50.gif" />
+    <Content Include="img\icons.png" />
+    <Content Include="img\photo1.png" />
+    <Content Include="img\photo2.png" />
+    <Content Include="img\photo3.jpg" />
+    <Content Include="img\photo4.jpg" />
+    <Content Include="img\user1-128x128.jpg" />
+    <Content Include="img\user2-160x160.jpg" />
+    <Content Include="img\user3-128x128.jpg" />
+    <Content Include="img\user4-128x128.jpg" />
+    <Content Include="img\user5-128x128.jpg" />
+    <Content Include="img\user6-128x128.jpg" />
+    <Content Include="img\user7-128x128.jpg" />
+    <Content Include="img\user8-128x128.jpg" />
+    <Content Include="index3.html" />
+    <Content Include="index2.html" />
+    <Content Include="lib\AdminLTE\dist\css\AdminLTE.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-black-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-black-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-black.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-black.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-blue-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-blue-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-blue.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-blue.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-green-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-green-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-green.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-green.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-purple-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-purple-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-purple.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-purple.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-red-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-red-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-red.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-red.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-yellow-light.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-yellow-light.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-yellow.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\skin-yellow.min.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\_all-skins.css" />
+    <Content Include="lib\AdminLTE\dist\css\skins\_all-skins.min.css" />
+    <Content Include="lib\AdminLTE\dist\js\app.js" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="lib\bootstrap\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="lib\durandal\css\durandal.css" />
+    <Content Include="lib\durandal\img\icon.png" />
+    <Content Include="lib\durandal\img\ios-startup-image-landscape.png" />
+    <Content Include="lib\durandal\img\ios-startup-image-portrait.png" />
+    <Content Include="lib\durandal\js\activator.js" />
+    <Content Include="lib\durandal\js\app.js" />
+    <Content Include="lib\durandal\js\binder.js" />
+    <Content Include="lib\durandal\js\composition.js" />
+    <Content Include="lib\durandal\js\events.js" />
+    <Content Include="lib\durandal\js\plugins\dialog.js" />
+    <Content Include="lib\durandal\js\plugins\history.js" />
+    <Content Include="lib\durandal\js\plugins\http.js" />
+    <Content Include="lib\durandal\js\plugins\observable.js" />
+    <Content Include="lib\durandal\js\plugins\router.js" />
+    <Content Include="lib\durandal\js\plugins\serializer.js" />
+    <Content Include="lib\durandal\js\plugins\widget.js" />
+    <Content Include="lib\durandal\js\system.js" />
+    <Content Include="lib\durandal\js\transitions\entrance.js" />
+    <Content Include="lib\durandal\js\viewEngine.js" />
+    <Content Include="lib\durandal\js\viewLocator.js" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="lib\jquery\jquery-2.2.3.min.js" />
+    <Content Include="lib\jquery_plugins\chosen\chosen-sprite%402x.png" />
+    <Content Include="lib\jquery_plugins\chosen\chosen-sprite.png" />
+    <Content Include="lib\jquery_plugins\chosen\chosen.css" />
+    <Content Include="lib\jquery_plugins\chosen\chosen.jquery.min.js" />
+    <Content Include="lib\jquery_plugins\easyui\jquery.easyui.min.js" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icon.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\back.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\blank.gif" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\cancel.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\clear.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\cut.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\datamodel.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\edit_add.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\edit_remove.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\filesave.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\filter.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\form_designer.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\help.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\large_chart.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\large_clipart.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\large_picture.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\large_shapes.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\large_smartart.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\lock.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\man.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\mini_add.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\mini_edit.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\mini_refresh.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\no.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\ok.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\pencil.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\print.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\redo.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\reload.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\search.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\sum.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\tip.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\undo.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\icons\workflow.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\accordion.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\calendar.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\combo.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\combobox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\datagrid.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\datebox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\dialog.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\easyui.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\filebox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\accordion_arrows.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\blank.gif" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\calendar_arrows.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\combo_arrow.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\datagrid_icons.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\datebox_arrow.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\layout_arrows.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\loading.gif" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\menu_arrows.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\messager_icons.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\pagination_icons.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\panel_tools.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\searchbox_button.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\slider_handle.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\spinner_arrows.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\tabs_icons.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\tree_icons.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\images\validatebox_warning.png" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\layout.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\linkbutton.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\menu.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\menubutton.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\messager.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\numberbox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\pagination.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\panel.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\progressbar.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\propertygrid.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\searchbox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\slider.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\spinner.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\splitbutton.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\tabs.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\textbox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\tooltip.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\tree.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\validatebox.css" />
+    <Content Include="lib\jquery_plugins\easyui\themes\metro\window.css" />
+    <Content Include="lib\jquery_plugins\glDatePicker.default.css" />
+    <Content Include="lib\jquery_plugins\glDatePicker.min.js" />
+    <Content Include="lib\jquery_plugins\jquery.autosize.min.js" />
+    <Content Include="lib\jquery_plugins\jquery.linq.min.js" />
+    <Content Include="lib\jquery_plugins\jquery.maskedinput.min.js" />
+    <Content Include="lib\jquery_plugins\jquery.nestable.js" />
+    <Content Include="lib\jquery_plugins\jquery.slimscroll.js" />
+    <Content Include="lib\jquery_plugins\numeral.min.js" />
+    <Content Include="lib\knockout\knockout-3.1.0.debug.js" />
+    <Content Include="lib\knockout\knockout-3.1.0.js" />
+    <Content Include="lib\knockout\knockout.mapping.js" />
+    <Content Include="lib\require\almond-custom.js" />
+    <Content Include="lib\require\r.js" />
+    <Content Include="lib\require\require.js" />
+    <Content Include="lib\require\text.js" />
+    <Content Include="lib\toastr\toastr.min.css" />
+    <Content Include="lib\toastr\toastr.min.js" />
+    <Content Include="starter.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebNinjectModule.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
+    <Compile Include="Controllers\ContractDTOController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\TestData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\jquery_plugins\moment.min.js" />
+    <Content Include="lib\bootstrap\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\alerts.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\background-variant.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\border-radius.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\buttons.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\center-block.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\clearfix.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\forms.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\gradients.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\grid-framework.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\grid.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\hide-text.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\image.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\labels.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\list-group.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\nav-divider.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\nav-vertical-align.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\opacity.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\pagination.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\panels.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\progress-bar.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\reset-filter.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\reset-text.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\resize.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\responsive-visibility.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\size.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\tab-focus.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\table-row.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\text-emphasis.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\text-overflow.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\mixins\vendor-prefixes.less" />
+    <Content Include="lib\AdminLTE\build\bootstrap-less\variables.less" />
+    <Content Include="lib\AdminLTE\build\less\.csslintrc" />
+    <Content Include="lib\AdminLTE\build\less\404_500_errors.less" />
+    <Content Include="lib\AdminLTE\build\less\AdminLTE-without-plugins.less" />
+    <Content Include="lib\AdminLTE\build\less\AdminLTE.less" />
+    <Content Include="lib\AdminLTE\build\less\alerts.less" />
+    <Content Include="lib\AdminLTE\build\less\bootstrap-social.less" />
+    <Content Include="lib\AdminLTE\build\less\boxes.less" />
+    <Content Include="lib\AdminLTE\build\less\buttons.less" />
+    <Content Include="lib\AdminLTE\build\less\callout.less" />
+    <Content Include="lib\AdminLTE\build\less\carousel.less" />
+    <Content Include="lib\AdminLTE\build\less\control-sidebar.less" />
+    <Content Include="lib\AdminLTE\build\less\core.less" />
+    <Content Include="lib\AdminLTE\build\less\direct-chat.less" />
+    <Content Include="lib\AdminLTE\build\less\dropdown.less" />
+    <Content Include="lib\AdminLTE\build\less\forms.less" />
+    <Content Include="lib\AdminLTE\build\less\fullcalendar.less" />
+    <Content Include="lib\AdminLTE\build\less\header.less" />
+    <Content Include="lib\AdminLTE\build\less\info-box.less" />
+    <Content Include="lib\AdminLTE\build\less\invoice.less" />
+    <Content Include="lib\AdminLTE\build\less\labels.less" />
+    <Content Include="lib\AdminLTE\build\less\lockscreen.less" />
+    <Content Include="lib\AdminLTE\build\less\login_and_register.less" />
+    <Content Include="lib\AdminLTE\build\less\mailbox.less" />
+    <Content Include="lib\AdminLTE\build\less\miscellaneous.less" />
+    <Content Include="lib\AdminLTE\build\less\mixins.less" />
+    <Content Include="lib\AdminLTE\build\less\modal.less" />
+    <Content Include="lib\AdminLTE\build\less\navs.less" />
+    <Content Include="lib\AdminLTE\build\less\plugins.less" />
+    <Content Include="lib\AdminLTE\build\less\print.less" />
+    <Content Include="lib\AdminLTE\build\less\products.less" />
+    <Content Include="lib\AdminLTE\build\less\profile.less" />
+    <Content Include="lib\AdminLTE\build\less\progress-bars.less" />
+    <Content Include="lib\AdminLTE\build\less\select2.less" />
+    <Content Include="lib\AdminLTE\build\less\sidebar-mini.less" />
+    <Content Include="lib\AdminLTE\build\less\sidebar.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-black-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-black.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-blue-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-blue.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-green-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-green.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-purple-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-purple.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-red-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-red.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-yellow-light.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\skin-yellow.less" />
+    <Content Include="lib\AdminLTE\build\less\skins\_all-skins.less" />
+    <Content Include="lib\AdminLTE\build\less\small-box.less" />
+    <Content Include="lib\AdminLTE\build\less\social-widgets.less" />
+    <Content Include="lib\AdminLTE\build\less\table.less" />
+    <Content Include="lib\AdminLTE\build\less\timeline.less" />
+    <Content Include="lib\AdminLTE\build\less\users-list.less" />
+    <Content Include="lib\AdminLTE\build\less\variables.less" />
+    <Content Include="Content\css\bootstrap.css.map" />
+    <Content Include="Content\css\bootstrap.min.css.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Views\Person\Index.cshtml" />
+    <Content Include="Views\Shared\_ControlSidebar.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Person\Create.cshtml" />
+    <Content Include="Views\Person\Edit.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Partner\Index.cshtml" />
+    <Content Include="Views\Partner\Create.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
+    <Content Include="Views\Location\Edit.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
+    <Content Include="Views\Document\Create.cshtml" />
+    <Content Include="Views\Document\Edit.cshtml" />
+    <Content Include="Views\Contract\Index.cshtml" />
+    <Content Include="Views\Contract\Create.cshtml" />
+    <Content Include="Views\Contract\Edit.cshtml" />
+    <Content Include="Views\ContractDTO\Create.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="img\credit\" />
+    <Folder Include="lib\AdminLTE\dist\css\alt\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Network.Common\Network.Common.csproj">
+      <Project>{b0b52efd-2c08-4ceb-9263-ac49f7b159ae}</Project>
+      <Name>Network.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.Core\Network.Core.csproj">
+      <Project>{7f5c8ebe-2015-41af-9a88-d0692553d171}</Project>
+      <Name>Network.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.Data\Network.Data.csproj">
+      <Project>{3452bf47-2053-40b4-9824-31a09185dec8}</Project>
+      <Name>Network.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.Domain\Network.Domain.csproj">
+      <Project>{54d32c2e-ea50-4c74-88b0-f63cacf3f69f}</Project>
+      <Name>Network.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>24011</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:24011/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
