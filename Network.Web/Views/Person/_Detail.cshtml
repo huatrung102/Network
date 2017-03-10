@@ -1,0 +1,122 @@
+﻿@model Network.Domain.Entity.Person
+
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title" data-bind="text: person().PersonName'">'s Information</h3>
+        </div>
+        <div class="modal-body">
+            <table class="table table-borderles">
+                <tbody>
+                    <tr>
+                        <td class="title">
+                            <label for="Q">@Html.DisplayNameFor(model => model.PersonName)</label><span class=""></span>
+                        </td>
+                        <td class="data">
+                            <span data-bind="text: person().PersonName" class=""></span>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+           
+            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+@*
+
+<h4>Person</h4>
+    <div>
+
+
+        <hr />
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PersonName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonPhone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PersonPhone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonPosition)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PersonPosition)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PersonDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PersonType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PersonType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsDeleted)
+            </dd>
+
+        </dl>
+
+
+    </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.PersonId }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+*@

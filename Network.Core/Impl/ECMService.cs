@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Network.Core.Impl
 {
-    public class ECMService : BaseService<ECM, Guid>, IECMService
+    public class ECMService //: BaseService<ECM, Guid>, IECMService
     {
     }
 }

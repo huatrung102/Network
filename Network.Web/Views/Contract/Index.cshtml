@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Network.Domain.Entity.Contract>
-
+﻿@model Network.Domain.DTO.ContractDTO
+@using Network.Domain.Enum
+@using Network.Common.Helper
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,22 +9,25 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
+    <a href="#" data-backdrop="static" data-keyboard="false" data-bind="click: function(){createView();} ">Create New</a>
+
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Document.DocumentNumber)
-        </th>
       
+        
         <th>
-            @Html.DisplayNameFor(model => model.Partner.PartnerName)
+            @Html.DisplayNameFor(model => model.LocationName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContractDeposit)
+            @Html.DisplayNameFor(model => model.ContractName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContractMoneyType)
+            @Html.DisplayNameFor(model => model.ContractNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContractBalance)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ContractValidDate)
@@ -32,62 +36,266 @@
             @Html.DisplayNameFor(model => model.ContractInvalidDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ContractStatus)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ContractSchedulePayment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IntegrityPlanType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
         </th>
        
         <th></th>
     </tr>
+    <tbody data-bind='foreach: contracts'>
+        <tr data-bind="visible: ContractId()!= null && ContractId()!=='00000000-0000-0000-0000-000000000000' ">
+            <td>
+                <span class="" data-bind="text: LocationName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: ContractName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: ContractNumber">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: ContractBalance">1</span>
+            </td>
+            
+            <td>
+                <span class="" data-bind="text: ContractValidDate">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: ContractInvalidDate">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: ContractSchedulePayment">1</span>
+            </td>
+           
+            <td>
+                <button  
+                        data-bind="click: $parent.editView" name="" value=""
+                        class="btn btn-xs btn-success">
+                    Edit
+                </button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Document.DocumentNumber)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.Partner.PartnerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractDeposit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractMoneyType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractValidDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractInvalidDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContractSchedulePayment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IntegrityPlanType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-      
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ContractId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ContractId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ContractId })
-        </td>
-    </tr>
-}
 
+            </td>
+        </tr>
+    </tbody>
 </table>
+<div id="myModalEdit" class="modal fade" role="dialog">
+    @Html.Partial("Edit", Model)
+</div>
+<div id="myModalCreate" class="modal fade" role="dialog" >
+    @Html.Partial("Create", Model)
+</div>
+
+
+@section scripts {
+    <section class="scripts">
+        <script type="text/javascript">
+
+            var DTO = function (data) {
+                ko.mapping.fromJS(data, null, this);
+            }
+
+            var MainViewModel = function (json) {
+                var self = this;
+                ko.mapping.fromJS(json, null, this);
+                self.DTO = new DTO(json);
+
+                self.contracts = ko.observableArray();
+                self.locations = ko.observableArray();
+                self.partners = ko.observableArray();
+                self.selectedDTO = ko.observable();
+
+                self.contractType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.ContractTypeEnum>())'));
+                self.schedulePayment = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.SchedulePaymentEnum>())'));
+
+                self.fileAttachment = function () {
+                    return new DTO(JSON.parse(@Html.ModelToJSon(
+                new Network.Domain.DTO.ContractFileAttachmentDTO())));
+                }
+
+                self.deleteFileAttachment = function (element, event) {
+                    self.DTO.ContractFileAttachments.remove(element);
+                }
+
+                
+               self.loadTable = function () {
+                    self.contracts.removeAll();
+
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0)
+                        {
+                            var mappedObj = $.map(data, function (item) {
+                                return new DTO(item);
+                            });
+                            if (mappedObj.length === 0) {
+                                var p = new DTO(json);
+                                //  p.DocumentFileAttachments = ko.observableArray();
+                                self.contracts.push(p);
+                            } else self.contracts(mappedObj);
+                        }
+                        
+                    });
+                }
+                self.createView = function () {
+                    $('#myModalCreate').modal(
+                           {
+                               backdrop: 'static',
+                               keyboard: false  // to prevent closing with Esc button (if you want this too)
+                           });
+                    self.createFileAttachment();
+                }
+
+                self.createFileAttachment = function () {
+                    var dto = new self.fileAttachment();
+                    //get documentId from createView
+                    dto.ContractId(self.DTO.ContractId());
+                    //generate GUID for FileAttachment
+                    dto.FileAttachmentId(UUID());
+                    self.DTO.ContractFileAttachments.push(dto);
+                    updateSelectUI($("#myModalCreate"));
+                    updateCheckboxUI();
+                }
+                self.create = function () {
+                    
+                    var data = new FormData();
+                    files = $("#myModalCreate .fileChooser");
+                    $.each(files, function (obj, v) {
+                        var file = v.files[0];
+                        var name = $(v).attr("id");
+                        data.append(name, file);
+                    });
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+                    var messageCreateOK = String.format('@Res.GlobalResource.Action_Create_Success', controller);
+                    var paramsObj = ko.mapping.toJSON(self.DTO);
+                    
+                    data.append("dto", paramsObj);
+                    $.ajax({
+                            method: "POST",
+                            url: '@Url.Action("Create")',
+                            timeout: 15000,                            
+                            contentType: false,
+                            processData: false,
+                            async: false,                            
+                            data: data
+                        }).fail(function () {
+                            toastr.error("Action failed !.");
+
+                        }).success(function (data) {
+                            data = JSON.parse(data);
+                            if (data.ResponseCode == 1) {
+                                toastr.success(messageCreateOK);
+                                $('#myModalCreate').modal('hide')
+                                self.loadTable();
+                            } else {
+                                console.log('error:' + data);
+                            }
+
+                        });;
+
+                };
+                self.changeFile1 = function (element, event) {
+                    var files = event.target.files;
+                    if (files.length > 0) {
+                        var file = files[0];
+                        element.FileName(file.name);
+                    }
+                }
+
+                self.loadLocation = function () {
+                    self.locations.removeAll();
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity","Location")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        $.each(data, function (idx, item) {
+                            self.locations.push(item);
+
+                        })
+                    });
+                };
+
+                self.loadPartner = function () {
+                    self.partners.removeAll();
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity","Partner")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        $.each(data, function (idx, item) {
+                            self.partners.push(item);
+
+                        })
+                    });
+                };
+
+
+                self.editView = function (data) {
+                    self.selectedDTO(data);
+                    $('#myModalEdit').modal({
+                        backdrop: 'static',
+                        keyboard: false  // to prevent closing with Esc button (if you want this too)
+                    });
+
+                    updateSelectUI($("#myModalEdit"));
+                    updateCheckboxUI();
+                }
+
+                self.edit = function (data) {
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Edit")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalEdit').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+                };
+                self.getDetailView = function (id) {
+
+                };
+                self.viewDetail = function (data) {
+                    console.log('data:' + data)
+                    self.getDetailView({ id: data.DepartmentId() });
+                };
+
+                self.loadTable();
+                self.loadLocation();
+                self.loadPartner();
+              //  updateUI();
+            }
+
+            $(function () {
+                var model = JSON.parse(@Html.ModelToJSon(Model));
+                ko.applyBindings(new MainViewModel(model), document.getElementById("page-content"));
+            })
+
+        </script>
+    </section>
+}

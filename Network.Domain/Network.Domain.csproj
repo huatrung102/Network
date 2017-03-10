@@ -42,9 +42,15 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -78,16 +84,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\ContractDTO.cs" />
+    <Compile Include="DTO\ContractFileAttachmentDTO.cs" />
+    <Compile Include="DTO\DepartmentDTO.cs" />
+    <Compile Include="DTO\DocumentDTO.cs" />
+    <Compile Include="DTO\DocumentFileAttachmentDTO.cs" />
+    <Compile Include="DTO\LocationDTO.cs" />
+    <Compile Include="DTO\PartnerDTO.cs" />
+    <Compile Include="DTO\PersonDTO.cs" />
+    <Compile Include="DTO\PositionDTO.cs" />
+    <Compile Include="DTO\StaffDTO.cs" />
     <Compile Include="Entity\BaseEntity.cs" />
     <Compile Include="Entity\Contract.cs" />
+    <Compile Include="Entity\ContractFileAttachment.cs" />
     <Compile Include="Entity\Cost.cs" />
+    <Compile Include="Entity\Department.cs" />
+    <Compile Include="Entity\District.cs" />
     <Compile Include="Entity\Document.cs" />
+    <Compile Include="Entity\DocumentFileAttachment.cs" />
+    <Compile Include="Entity\DocumentHP.cs" />
+    <Compile Include="Entity\DocumentHPFileAttachment.cs" />
+    <Compile Include="Entity\DocumentPartnerHP.cs" />
     <Compile Include="Entity\ECM.cs" />
     <Compile Include="Entity\FileAttachment.cs" />
     <Compile Include="Entity\IntegrityPlan.cs" />
     <Compile Include="Entity\Location.cs" />
+    <Compile Include="Entity\LocationFileAttachment.cs" />
+    <Compile Include="Entity\LocationHP.cs" />
+    <Compile Include="Entity\LocationHPFileAttachment.cs" />
     <Compile Include="Entity\Partner.cs" />
+    <Compile Include="Entity\PartnerHP.cs" />
     <Compile Include="Entity\Person.cs" />
+    <Compile Include="Entity\Position.cs" />
+    <Compile Include="Entity\Province.cs" />
+    <Compile Include="Entity\Staff.cs" />
     <Compile Include="Enum\EType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -99,6 +128,10 @@
     <ProjectReference Include="..\Network.Common\Network.Common.csproj">
       <Project>{b0b52efd-2c08-4ceb-9263-ac49f7b159ae}</Project>
       <Name>Network.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Res\Res.csproj">
+      <Project>{af4441e2-cf85-4779-8f13-1a880c6517e7}</Project>
+      <Name>Res</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

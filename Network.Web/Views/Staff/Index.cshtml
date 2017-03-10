@@ -1,0 +1,288 @@
+﻿@model Network.Domain.DTO.StaffDTO
+@using Network.Domain.Enum
+@using Network.Common.Helper
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+
+
+    <a href="#" data-backdrop="static" data-keyboard="false"  data-bind="click: function(){createView();} ">Create New</a>
+
+
+</p>
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.StaffName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffIsHeadOffice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PositionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StaffCount)
+        </th>
+        <th></th>
+    </tr>
+    <tbody data-bind='foreach: staffs'>
+        <tr data-bind="visible: StaffId()!= null && StaffId()!=='00000000-0000-0000-0000-000000000000' ">
+            <td>
+                <span class="" data-bind="text: StaffName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: StaffPhone">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: StaffEmail">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: StaffIsHeadOffice">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: DepartmentName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: PositionName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: StaffCount">1</span>
+            </td>
+           
+            <td>
+                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                        data-target="#myModalEdit" data-bind="click: $parent.editView" name="" value=""
+                        class="btn btn-xs btn-success">
+                    Edit
+                </button>
+
+
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+<div id="myModalEdit" class="modal fade" role="dialog" aria-hidden="true">
+    @Html.Partial("Edit", Model)
+</div>
+<div id="myModalCreate" class="modal fade" role="dialog" aria-hidden="true">
+    @Html.Partial("Create", Model)
+</div>
+
+
+@section scripts {
+    <section class="scripts">
+        <script type="text/javascript">
+
+            var DTO = function (data) {               
+                ko.mapping.fromJS(data, null, this);                
+            }
+
+            var MainViewModel = function (json) {
+                var self = this;
+                ko.mapping.fromJS(json, null, this);
+                self.DTO = new DTO(json);
+
+              //  self.defaultDTO = new DTO(json);
+                self.staffs = ko.observableArray();
+                self.positions = ko.observableArray();
+                self.departments = ko.observableArray();
+                self.selectedDTO = ko.observable();
+
+                self.isLeader = ko.observable(false);
+
+                self.loadTable = function () {
+                    self.staffs.removeAll();
+
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        var mappedObj = $.map(data, function (item) { return new DTO(item) });
+                        if (mappedObj.length === 0) self.staffs.push(new DTO(json));
+                        else self.staffs(mappedObj);
+
+                    });
+                }
+                self.createView = function () {
+                   
+                    $('#myModalCreate').modal({
+                        backdrop: 'static',
+                        keyboard: false  // to prevent closing with Esc button (if you want this too)
+                    });
+                    $("select").select2({
+                        dropdownParent: $("#myModalCreate")
+                    });
+                  //  $("select").chosen('destroy').chosen();
+                }
+
+                self.create = function () {
+                    self.DTO.StaffId(UUID());
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.DTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Create")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalCreate').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+
+                };
+
+
+                self.loadDepartment = function () {
+                    self.departments.removeAll();
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity","Department")',
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        $.each(data, function (idx,item) {
+                            self.departments.push(item);
+
+                        })                     
+                    });
+                };
+                self.loadPosition = function () {
+                    self.positions.removeAll();
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity","Position")',
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {                        
+                        $.each(data, function (idx, item) {
+                            self.positions.push(item);
+
+                        })
+                    });
+                };
+
+                self.editView = function (data) {                   
+                    self.selectedDTO(data);
+                    //  $("select").chosen('destroy').chosen();
+                    //$("select").select2('destroy').select2().trigger('change');
+                    //$("select").select2('destroy');
+                    $('#myModalEdit').modal({
+                        backdrop: 'static',
+                        keyboard: false  // to prevent closing with Esc button (if you want this too)
+                    });
+                    $("select").select2({
+                        dropdownParent: $("#myModalEdit")
+                    });
+                    
+                }
+
+                self.edit = function (data) {
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Edit")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalEdit').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+                };
+                self.getDetailView = function (id) {
+
+                };
+                self.viewDetail = function (data) {
+                    console.log('data:' + data)
+                    self.getDetailView({ id: data.DepartmentId() });
+                };
+
+                self.DTO.PositionId.subscribe(function (newValue) {
+
+                })
+
+                var checkIsLeader = function (positionId) {
+                    var selectedPosition = $.Enumerable.From(self.positions()).Single(function (x) {
+                        // console.log(x.PositionId + ' | ' + obj.PositionId())
+                        return x.PositionId === positionId;
+
+                    });
+                    if (selectedPosition !== undefined) {
+                        //self.isLeader(selectedPosition.PositionIsLeader);
+                        return selectedPosition.PositionIsLeader;
+                    }
+                    return false;
+                }
+                self.checkPositionIsLeader = function (obj, event) {                    
+                    if (event.originalEvent) {
+                        console.log('user changed');
+                    } else {
+                        console.log('programe changed');                        
+                    }
+                    self.isLeader(checkIsLeader(obj.PositionId()));                    
+                }
+              
+                self.loadTable();
+                self.loadDepartment();
+                self.loadPosition();
+                self.isLeader(self.positions()[0].PositionIsLeader);
+
+            }
+
+            $(function () {
+
+                var model = JSON.parse(@Html.ModelToJSon(Model));
+                ko.applyBindings(new MainViewModel(model), document.getElementById("page-content"));
+            })
+
+        </script>
+    </section>
+}

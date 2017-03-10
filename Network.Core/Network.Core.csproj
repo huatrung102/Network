@@ -30,7 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,26 +56,53 @@
     <Compile Include="Impl\BaseService.cs" />
     <Compile Include="Impl\ContractService.cs" />
     <Compile Include="Impl\CostService.cs" />
+    <Compile Include="Impl\DepartmentService.cs" />
+    <Compile Include="Impl\DistrictService.cs" />
+    <Compile Include="Impl\DocumentFileAttachmentService.cs" />
     <Compile Include="Impl\DocumentService.cs" />
     <Compile Include="Impl\ECMService.cs" />
     <Compile Include="Impl\FileAttachmentService.cs" />
     <Compile Include="Impl\IntegrityPlanService.cs" />
+    <Compile Include="Impl\LocationFileAttachmentService.cs" />
     <Compile Include="Impl\LocationService.cs" />
     <Compile Include="Impl\PartnerService.cs" />
     <Compile Include="Impl\PersonService.cs" />
+    <Compile Include="Impl\PositionService.cs" />
+    <Compile Include="Impl\ProvinceService.cs" />
+    <Compile Include="Impl\StaffService.cs" />
     <Compile Include="Interfaces\IBaseService.cs" />
+    <Compile Include="Interfaces\IContractFileAttachmentService.cs" />
     <Compile Include="Interfaces\IContractService.cs" />
     <Compile Include="Interfaces\ICostService.cs" />
+    <Compile Include="Interfaces\IDepartmentService.cs" />
+    <Compile Include="Interfaces\IDistrictService.cs" />
+    <Compile Include="Interfaces\IDocumentFileAttachmentService.cs" />
+    <Compile Include="Interfaces\IDocumentHPFileAttachmentService.cs" />
+    <Compile Include="Interfaces\IDocumentHPService.cs" />
+    <Compile Include="Interfaces\IDocumentPartnerHPService.cs" />
     <Compile Include="Interfaces\IDocumentService.cs" />
     <Compile Include="Interfaces\IECMService.cs" />
     <Compile Include="Interfaces\IFileAttachmentService.cs" />
     <Compile Include="Interfaces\IIntegrityPlanService.cs" />
+    <Compile Include="Interfaces\ILocationFileAttachmentService.cs" />
+    <Compile Include="Interfaces\ILocationHPFileAttachmentService.cs" />
+    <Compile Include="Interfaces\ILocationHPService.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\IPartnerHPService.cs" />
     <Compile Include="Interfaces\IPartnerService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />
+    <Compile Include="Interfaces\IPositionService.cs" />
+    <Compile Include="Interfaces\IProvinceService.cs" />
+    <Compile Include="Interfaces\IStaffService.cs" />
+    <Compile Include="Mapping\FileAttachmentResolver.cs" />
+    <Compile Include="Mapping\ModelMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Network.Common\Network.Common.csproj">
+      <Project>{b0b52efd-2c08-4ceb-9263-ac49f7b159ae}</Project>
+      <Name>Network.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Network.Data\Network.Data.csproj">
       <Project>{3452BF47-2053-40B4-9824-31A09185DEC8}</Project>
       <Name>Network.Data</Name>
@@ -71,6 +111,10 @@
       <Project>{54D32C2E-EA50-4C74-88B0-F63CACF3F69F}</Project>
       <Name>Network.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

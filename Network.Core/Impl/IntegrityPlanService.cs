@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Network.Core.Impl
 {
-    public  class IntegrityPlanService : BaseService<IntegrityPlan, Guid>, IIntegrityPlanService
+    public  class IntegrityPlanService //: BaseService<IntegrityPlan, Guid>, IIntegrityPlanService
     { 
     }
 }

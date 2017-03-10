@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace Network.Core.Impl
 {
-    public class FileAttachmentService : BaseService<FileAttachment, Guid>, IFileAttachmentService
+    public class FileAttachmentService //: BaseService<FileAttachment, Guid>, IFileAttachmentService
     {
-        public FileAttachmentService(UnitOfWork UnitOfWork) : base(UnitOfWork) { }
-        public FileAttachmentService() : base() { }
+      //  public FileAttachmentService(UnitOfWork UnitOfWork) : base(UnitOfWork) { }
+      //  public FileAttachmentService() : base() { }
+
+
     }
 }

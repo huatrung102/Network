@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -40,6 +44,10 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -79,12 +87,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binder\TrimModelBinder.cs" />
+    <Compile Include="DefineAttribute\DisplayTextEnum.cs" />
     <Compile Include="DefineAttribute\SqlDefaultDateTimeAttribute.cs" />
     <Compile Include="DefineAttribute\StringTrimAttribute.cs" />
+    <Compile Include="Extensions\GeographyConverter.cs" />
+    <Compile Include="Extensions\NWException.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\JsonError.cs" />
+    <Compile Include="Extensions\ResponseConstants.cs" />
     <Compile Include="Helper\DALHelper.cs" />
+    <Compile Include="Helper\EnumHelper.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Helper\GeoHelper.cs" />
     <Compile Include="Helper\GuidHelper.cs" />
     <Compile Include="Helper\CustomUrlHelper.cs" />
+    <Compile Include="Extensions\JsonResponse.cs" />
+    <Compile Include="Helper\MappingHelper.cs" />
+    <Compile Include="Helper\MvcHelper.cs" />
+    <Compile Include="Helper\StateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

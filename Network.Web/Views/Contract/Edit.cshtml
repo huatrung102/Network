@@ -1,136 +1,196 @@
-﻿@model Network.Domain.Entity.Contract
+﻿@model Network.Domain.DTO.ContractDTO
+<div class="modal-dialog modal-lg">
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    <!-- Modal content-->
+    <div class="modal-content">
 
-<h2>Edit</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Contract</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ContractId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PartnerId, "PartnerId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PartnerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PartnerId, "", new { @class = "text-danger" })
-            </div>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Contract</h3>
         </div>
+        <div class="modal-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DocumentId, "DocumentId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("DocumentId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DocumentId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractDeposit, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContractDeposit, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContractDeposit, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="form-horizontal" data-bind="with: selectedDTO">
+                <h4>Edit</h4>
+                <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractMoneyType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ContractMoneyType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ContractMoneyType, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <select style="width:295px!important" data-bind="options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: ContractName" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractValidDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContractValidDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContractValidDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: ContractNumber" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractInvalidDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContractInvalidDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContractInvalidDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ContractStatus, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ContractStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PartnerId, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <select style="width:295px!important" data-bind="options: $root.partners, optionsText: 'PartnerName', optionsValue: 'PartnerId', value: PartnerId" class="col-xs-12 "></select>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContractSchedulePayment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContractSchedulePayment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContractSchedulePayment, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IntegrityPlanId, "IntegrityPlanId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IntegrityPlanId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IntegrityPlanId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ECMId, "ECMId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ECMId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ECMId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ModifiedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ModifiedOn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ModifiedOn, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractBalance, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="money: ContractBalance" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeleted)
-                    @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractIsTax, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <div class="checkbox">
+                                <input type="checkbox" class="" data-bind="checked: ContractIsTax" /> VAT
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractDeposit, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <div class="col-md-4">
+                                <input class="row form-control " data-bind="value: ContractDeposit" />
+                            </div>
+                            <label class="control-label col-md-8" data-bind="text: ContractDeposit() && ContractBalance()? numberWithCommas(ContractDeposit()*ContractBalance()): 0"></label>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractFirstPayDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+
+                            <input id="datemask" class="form-control" data-bind="datepicker: ContractFirstPayDate, datepickerOptions: { 'dateFormat': 'dd/mm/yyyy' }" />
+                            <!--
+                            <input class="form-control datepicker" data-bind="value: ContractFirstPayDate()? ContractFirstPayDate(): ''" />
+                            <input data-bind="datepicker: ContractFirstPayDate , datepickerOptions: { minDate: new Date() }" />
+                            -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractSignedDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input id="datemask" class="form-control" data-bind="datepicker: ContractSignedDate" />
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractValidDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input id="datemask" class="form-control " data-bind="datepicker: ContractValidDate" />
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractInvalidDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input id="datemask" class="form-control " data-bind="datepicker: ContractInvalidDate" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractSchedulePayment, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+
+                            <select style="width:295px!important" data-bind="options: $root.schedulePayment, optionsText: 'Text', optionsValue: 'Value', value: ContractSchedulePayment" class="col-xs-12 "></select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractConditionTermEnd, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: ContractConditionTermEnd" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ContractConditionExtension, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: ContractConditionExtension" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div data-bind="foreach: ContractFileAttachments">
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <div class="col-md-7">
+                                    <input data-bind="attr:{'id': FileAttachmentId},event:{change: $root.changeFile1}" type="file" class="fileChooser form-control" />
+                                </div>
+                                <div class="col-md-5">
+                                    <label>
+                                        <input type="checkbox" class="" data-bind1="checked: FileAttachmentStatus" />Active
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <input type="text" class="col-md-9 form-control" data-bind="value: FileName" />
+                                </div>
+                                <div class="col-md-3">
+
+                                    <input type="checkbox" class="" data-bind="checked: FileAttachmentStatus" />
+
+                                </div>
+                                <div class="col-md-3">
+                                    <button data-bind="click: $root.deleteFileAttachment" class="btn btn-xs btn-danger">remove</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-7">
+                                    <select style="width:295px!important" data-bind="options: $root.contractType, optionsText: 'Text', optionsValue: 'Value', value: ContractType" class="col-xs-12 "></select>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" id="#datemask" class="datepicker form-control" data-bind="value: FileAttachmentValidDate" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button data-bind="click: $root.createFileAttachment" class="btn btn-primary">Add File</button>
+                    </div>
+                </div>
+
+
+
+
+
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+
+        <div class="modal-footer">
+            <button data-bind="click: edit" class="btn btn-primary">Save</button>
+            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+
         </div>
+
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

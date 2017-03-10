@@ -2,9 +2,14 @@
 using Network.Core.Impl;
 using Network.Core.Interfaces;
 using Network.Data.UoW;
+using Network.Domain.DTO;
 using Network.Domain.Entity;
 using Network.Web.Test;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Network.Web.Controllers
@@ -19,8 +24,30 @@ namespace Network.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
+             
+           // var des = MappingHelper.Map<IEnumerable<PersonDTO>>(_IService.GetAllToView());
+            
             return View(_IService.GetAllToView());
         }
+        [HttpPost]
+        public string GetPatrialView_Detail(string id)
+        {
+            Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+            string html =  MvcHelper.RenderViewToString(this.ControllerContext, "_Detail", p);
+            return html;
+        }
+
+        public string GetAllToView()
+        {
+            return JsonConvert.SerializeObject(_IService.GetAllToView(), Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            });
+            
+        }
+
 
         public ActionResult Create()
         {
@@ -41,6 +68,19 @@ namespace Network.Web.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult Detail(string id)
+        {
+            try
+            {
+
+                Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                return View(p);
+            }
+            catch (Exception)
+            {
+            }
+            return View("Index");
         }
 
         public ActionResult Edit(string id)

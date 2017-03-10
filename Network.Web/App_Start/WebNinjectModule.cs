@@ -15,14 +15,14 @@ namespace Network.Web.App_Start
         public override void Load()
         {
             #region Services
-            Bind<IPersonService>().To<PersonService>();
+            //Bind<IPersonService>().To<PersonService>();
             Bind<IPartnerService>().To<PartnerService>();
             Bind<ILocationService>().To<LocationService>();
-            Bind<IIntegrityPlanService>().To<IntegrityPlanService>();
-            Bind<IFileAttachmentService>().To<FileAttachmentService>();
-            Bind<IECMService>().To<ECMService>();
-            Bind<IDocumentService>().To<DocumentService>();
-            Bind<ICostService>().To<CostService>();
+          //  Bind<IIntegrityPlanService>().To<IntegrityPlanService>();
+         //   Bind<IFileAttachmentService>().To<FileAttachmentService>();
+          //  Bind<IECMService>().To<ECMService>();
+         //   Bind<IDocumentService>().To<DocumentService>();
+         //   Bind<ICostService>().To<CostService>();
             Bind<IContractService>().To<ContractService>();
             #endregion
 
@@ -33,7 +33,7 @@ namespace Network.Web.App_Start
             Bind<IIntegrityPlanRepository>().To<IntegrityPlanRepository>();
             Bind<IFileAttachmentRepository>().To<FileAttachmentRepository>();
             Bind<IECMRepository>().To<ECMRepository>();
-            Bind<IDocumentRepository>().To<DocumentRepository>();
+         //   Bind<IDocumentRepository>().To<DocumentRepository>();
             Bind<ICostRepository>().To<CostRepository>();
             Bind<IContractRepository>().To<ContractRepository>();
 

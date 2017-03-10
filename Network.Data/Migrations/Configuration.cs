@@ -11,6 +11,7 @@ namespace Network.Data.Migrations
         {
             AutomaticMigrationDataLossAllowed = true;
             AutomaticMigrationsEnabled = true;
+            
         }
 
         protected override void Seed(Network.Data.Context.NetworkContext context)

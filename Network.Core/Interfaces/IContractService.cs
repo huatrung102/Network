@@ -9,6 +9,6 @@ namespace Network.Core.Interfaces
 {
     public interface IContractService : IBaseService<Contract,Guid>
     {
-
+        bool UpdateWithChilds(Contract entityToUpdate, HashSet<Type> childTypes);
     }
 }

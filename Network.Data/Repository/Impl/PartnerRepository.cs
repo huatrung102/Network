@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Network.Data.Context;
 using Network.Data.UoW;
+using System.Data.Entity;
+using Network.Common.Extensions;
 
 namespace Network.Data.Repository.Impl
 {
@@ -16,5 +18,6 @@ namespace Network.Data.Repository.Impl
         public PartnerRepository(UnitOfWork _context) : base(_context)
         {
         }
+                
     }
 }

@@ -1,8 +1,13 @@
-﻿using Network.Common.Helper;
+﻿using Network.Common.Extensions;
+using Network.Common.Helper;
+using Network.Core.Impl;
 using Network.Core.Interfaces;
+using Network.Domain.DTO;
 using Network.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,54 +18,62 @@ namespace Network.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View(_IService.GetAllToView());
+            return View(new LocationDTO());
+        }
+        public LocationController(): base() {
+            _IService = new LocationService(UnitOfWork);
+            
+        }
+        public JsonResult getAllEntity()
+        {
+            var dto = _IService.GetAllToView().Select(p => _IService.getMapperDTO<LocationDTO>(p)).ToList();
+            
+            return Json(dto, JsonRequestBehavior.AllowGet);
         }
 
+        
         public ActionResult Create()
         {
 
             return View();
         }
+
+        private Location getLocationFromDto(string dto)
+        {
+            LocationDTO dtoObj = MvcHelper.DeserializeObject<LocationDTO>(dto);            
+            Location p = _IService.getFromMapperDTO(dtoObj);           
+            return p;
+        }
         [HttpPost]
-        public ActionResult Create(Location l)
+        public string Create(string dto)
         {
             try
             {
-                l.LocationId = GuidHelper.CheckAndRefreshGuid(l.LocationId.ToString());               
-                _IService.Add(l);
-                return RedirectToAction("Index");
+                Location p = getLocationFromDto(dto);
+                bool result = _IService.Add(p);
+                return JsonOk();
+
             }
-            catch (Exception ex)
+            catch (NWException ex)
             {
-                return View();
+                return JsonError(ex);
             }
         }
-
-        public ActionResult Edit(string id)
-        {
-            try
-            {
-                Location l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
-                return View(l);
-            }
-            catch (Exception)
-            {
-            }
-            return View("Index");
-        }
-
+            
         // POST: Test/Edit/5
         [HttpPost]
-        public ActionResult Edit(Location l)
+        public string Edit(string dto)
         {
             try
-            {                
-                _IService.Update(l);
-                return RedirectToAction("Index");
-            }
-            catch
             {
-                return View();
+                Location p = getLocationFromDto(dto);
+                bool result =  _IService.Update(p);
+                return JsonOk();
+
+            }
+            catch (NWException ex)
+            {
+                return JsonError(ex);
             }
         }
 

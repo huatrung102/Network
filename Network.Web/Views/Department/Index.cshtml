@@ -1,0 +1,202 @@
+﻿@model Network.Domain.DTO.DepartmentDTO
+@using Network.Domain.Enum
+@using Network.Common.Helper
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+
+    <a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+       data-target="#myModalCreate" data-bind="click: function(){} ">Create New</a>
+
+</p>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </th>
+        <th></th>
+    </tr>
+    <tbody data-bind='foreach: departments'>
+        <tr>
+            <td>
+                <span class="" data-bind="text: DepartmentName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: LocationName">1</span>
+            </td>
+         
+
+            <td>
+                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                        data-target="#myModalEdit" data-bind="visible: DepartmentId()!= null && DepartmentId()!=='00000000-0000-0000-0000-000000000000'
+                        ,click: $parent.editView" name="" value=""
+                        class="btn btn-xs btn-success">
+                    Edit
+                </button>
+
+               
+            </td>
+        </tr>
+    </tbody>
+
+
+</table>
+<div id="myModalEdit" class="modal fade" role="dialog">
+    @Html.Partial("Edit", Model)
+</div>
+<div id="myModalCreate" class="modal fade" role="dialog">
+    @Html.Partial("Create", Model)
+</div>
+
+
+
+@section scripts {
+    <section class="scripts">
+        <script type="text/javascript">
+
+            var DTO = function (data) {
+                var self = this;
+                ko.mapping.fromJS(data, null, self);
+                return self;
+            }
+
+            var MainViewModel = function (json) {
+                var self = this;                
+                ko.mapping.fromJS(json, null, this);
+                self.DTO = new DTO(json);
+              
+              //  self.defaultDTO = new DTO(json);                
+                self.departments = ko.observableArray();
+                self.locations = ko.observableArray();
+                self.selectedDTO = ko.observable();
+                
+
+
+               
+                self.loadTable = function () {
+                    self.departments.removeAll();
+
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        var mappedObj = $.map(data, function (item) { return new DTO(item) });
+                        if (mappedObj.length === 0) self.departments.push(new DTO(json));
+                        else self.departments(mappedObj);
+
+                    });
+                }
+                self.create = function () {
+                    self.DTO.DepartmentId(UUID());
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.DTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Create")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalCreate').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+
+                };
+                
+            
+                self.loadLocation = function () {
+                    var result = [];
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity", "Location")',
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        // console.log(data);
+                        var mappedObj = $.map(data, function (item) { return new DTO(item) });
+                        if (mappedObj.length === 0) self.locations.push(new DTO(json));
+                        else self.locations(mappedObj);
+                        
+
+                    });
+                };
+               
+                
+                self.editView = function (data) {
+                    self.selectedDTO(data);
+                }
+
+                self.edit = function (data) {
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Edit")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalEdit').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+                };
+                self.getDetailView = function (id) {
+
+                };
+                self.viewDetail = function (data) {
+                    console.log('data:' + data)
+                    self.getDetailView({ id: data.DepartmentId() });
+                };
+
+                self.loadTable();
+                self.loadLocation();
+            }
+
+            $(function () {
+               
+                var model = JSON.parse(@Html.ModelToJSon(Model));
+                ko.applyBindings(new MainViewModel(model), document.getElementById("page-content"));
+            })
+            
+        </script>
+    </section>
+}

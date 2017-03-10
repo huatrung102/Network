@@ -89,8 +89,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -176,6 +176,8 @@
     <Content Include="Content\css\AdminLTE.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\chosen.css" />
+    <Content Include="Content\css\chosen.min.css" />
     <Content Include="Content\css\datepicker3.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
@@ -199,6 +201,23 @@
     <Content Include="Content\css\icheck\red.min.css" />
     <Content Include="Content\css\icheck\yellow.css" />
     <Content Include="Content\css\icheck\yellow.min.css" />
+    <Content Include="Content\css\kendo.materialblack.min.css" />
+    <Content Include="Content\css\MaterialBlack\editor.png" />
+    <Content Include="Content\css\MaterialBlack\imagebrowser.png" />
+    <Content Include="Content\css\MaterialBlack\indeterminate.gif" />
+    <Content Include="Content\css\MaterialBlack\loading-image.gif" />
+    <Content Include="Content\css\MaterialBlack\loading.gif" />
+    <Content Include="Content\css\MaterialBlack\loading_2x.gif" />
+    <Content Include="Content\css\MaterialBlack\markers.png" />
+    <Content Include="Content\css\MaterialBlack\markers_2x.png" />
+    <Content Include="Content\css\MaterialBlack\slider-h.gif" />
+    <Content Include="Content\css\MaterialBlack\slider-v.gif" />
+    <Content Include="Content\css\MaterialBlack\sprite.png" />
+    <Content Include="Content\css\MaterialBlack\sprite_2x.png" />
+    <Content Include="Content\css\MaterialBlack\sprite_kpi.png" />
+    <Content Include="Content\css\MaterialBlack\sprite_kpi_2x.png" />
+    <Content Include="Content\css\pace.css" />
+    <Content Include="Content\css\pace.min.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\skins\skin-black-light.css" />
@@ -227,6 +246,7 @@
     <Content Include="Content\css\skins\skin-yellow.min.css" />
     <Content Include="Content\css\skins\_all-skins.css" />
     <Content Include="Content\css\skins\_all-skins.min.css" />
+    <Content Include="Content\css\toastr.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\icheck\aero%402x.png" />
@@ -252,9 +272,12 @@
     <Content Include="Content\img\user.jpg" />
     <Content Include="Content\js\app.js" />
     <Content Include="Content\js\app.min.js" />
+    <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\init.js" />
     <Content Include="Content\js\plugins\bootstrap\bootstrap.js" />
     <Content Include="Content\js\plugins\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\js\plugins\chosen\chosen.jquery.js" />
+    <Content Include="Content\js\plugins\chosen\chosen.jquery.min.js" />
     <Content Include="Content\js\plugins\datepicker\bootstrap-datepicker.js" />
     <Content Include="Content\js\plugins\fastclick\fastclick.js" />
     <Content Include="Content\js\plugins\fastclick\fastclick.min.js" />
@@ -264,8 +287,23 @@
     <Content Include="Content\js\plugins\inputmask\jquery.inputmask.bundle.min.js" />
     <Content Include="Content\js\plugins\jquery\jquery-2.2.4.js" />
     <Content Include="Content\js\plugins\jquery\jquery-2.2.4.min.js" />
+    <Content Include="Content\js\plugins\kendo\kendo.core.min.js" />
+    <Content Include="Content\js\plugins\kendo\kendo.draganddrop.min.js" />
+    <Content Include="Content\js\plugins\kendo\kendo.sortable.min.js" />
+    <Content Include="Content\js\plugins\kendo\kendo.upload.min.js" />
+    <Content Include="Content\js\plugins\kendo\kendo.userevents.min.js" />
+    <Content Include="Content\js\plugins\knockout\knockout-3.1.0.js" />
+    <Content Include="Content\js\plugins\knockout\knockout.mapping.js" />
+    <Content Include="Content\css\kendo.materialblack.min.css.map" />
+    <None Include="Content\js\plugins\linq\jquery.linq-vsdoc.js" />
+    <Content Include="Content\js\plugins\linq\jquery.linq.min.js" />
+    <None Include="Content\js\plugins\linq\linq-vsdoc.js" />
+    <Content Include="Content\js\plugins\linq\linq.min.js" />
     <Content Include="Content\js\plugins\moment\moment.js" />
     <Content Include="Content\js\plugins\moment\moment.min.js" />
+    <Content Include="Content\js\plugins\numeral\numeral.min.js" />
+    <Content Include="Content\js\plugins\pace\pace.js" />
+    <Content Include="Content\js\plugins\pace\pace.min.js" />
     <Content Include="Content\js\plugins\select2\i18n\en.js" />
     <Content Include="Content\js\plugins\select2\select2.full.js" />
     <Content Include="Content\js\plugins\select2\select2.full.min.js" />
@@ -273,6 +311,7 @@
     <Content Include="Content\js\plugins\select2\select2.min.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\js\plugins\toastr\toastr.min.js" />
     <Content Include="Content\js\plugins\validator\validator.js" />
     <Content Include="Content\js\plugins\validator\validator.min.js" />
     <Content Include="Global.asax" />
@@ -289,6 +328,8 @@
     <Content Include="img\photo2.png" />
     <Content Include="img\photo3.jpg" />
     <Content Include="img\photo4.jpg" />
+    <Content Include="img\star_green.png" />
+    <Content Include="img\star_red.png" />
     <Content Include="img\user1-128x128.jpg" />
     <Content Include="img\user2-160x160.jpg" />
     <Content Include="img\user3-128x128.jpg" />
@@ -455,15 +496,22 @@
     <Content Include="lib\jquery_plugins\numeral.min.js" />
     <Content Include="lib\knockout\knockout-3.1.0.debug.js" />
     <Content Include="lib\knockout\knockout-3.1.0.js" />
+    <Content Include="lib\knockout\knockout-repeat.js" />
+    <Content Include="lib\knockout\knockout-select2.js" />
     <Content Include="lib\knockout\knockout.mapping.js" />
+    <Content Include="lib\knockout\knockout.x-editable.js" />
     <Content Include="lib\require\almond-custom.js" />
     <Content Include="lib\require\r.js" />
     <Content Include="lib\require\require.js" />
     <Content Include="lib\require\text.js" />
     <Content Include="lib\toastr\toastr.min.css" />
     <Content Include="lib\toastr\toastr.min.js" />
+    <Content Include="Content\js\plugins\uuid\uuid-v4.js" />
+    <Content Include="Scripts\app\app.js" />
     <Content Include="starter.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -472,17 +520,21 @@
     <Compile Include="App_Start\WebNinjectModule.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
-    <Compile Include="Controllers\ContractDTOController.cs" />
+    <Compile Include="Controllers\CostController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestData.cs" />
+    <Compile Include="Utils\FileUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -613,7 +665,14 @@
     <Content Include="Views\Contract\Index.cshtml" />
     <Content Include="Views\Contract\Create.cshtml" />
     <Content Include="Views\Contract\Edit.cshtml" />
-    <Content Include="Views\ContractDTO\Create.cshtml" />
+    <Content Include="Views\Person\_Detail.cshtml" />
+    <Content Include="Views\Partner\CreateTemplate.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Department\Create.cshtml" />
+    <Content Include="Views\Department\Edit.cshtml" />
+    <Content Include="Views\Staff\Index.cshtml" />
+    <Content Include="Views\Staff\Create.cshtml" />
+    <Content Include="Views\Staff\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -623,9 +682,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_LocalResources\" />
     <Folder Include="img\credit\" />
     <Folder Include="lib\AdminLTE\dist\css\alt\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Cost\" />
+    <Folder Include="Views\Position\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Network.Common\Network.Common.csproj">
@@ -643,6 +705,10 @@
     <ProjectReference Include="..\Network.Domain\Network.Domain.csproj">
       <Project>{54d32c2e-ea50-4c74-88b0-f63cacf3f69f}</Project>
       <Name>Network.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Res\Res.csproj">
+      <Project>{af4441e2-cf85-4779-8f13-1a880c6517e7}</Project>
+      <Name>Res</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

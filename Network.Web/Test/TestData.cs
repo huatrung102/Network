@@ -16,12 +16,12 @@ namespace Network.Web.Test
             
                 return new Person()
                 {
-                    PersonDescription = "Test Person",
+                  //  PersonDescription = "Test Person",
                     PersonId = testGuid,
                     PersonName = "Person" + testGuid.ToString().Substring(0, 5),
                     PersonPhone = "123456789",
                     PersonPosition = "Cu li cao cap",
-                    PersonType = Network.Domain.Enum.EType.PersonEnum.CBAMC,
+                //    PersonType = Network.Domain.Enum.EType.PersonEnum.CBAMC,
 
                 };
             
@@ -32,7 +32,7 @@ namespace Network.Web.Test
             return new Partner()
             {
                 PartnerId = testGuid,
-                PersonId = p.PersonId,
+              //  PersonId = p.PersonId,
                 PartnerName = "Partner" + testGuid.ToString().Substring(0, 5),
                 PartnerPhone = "1234567899",
 

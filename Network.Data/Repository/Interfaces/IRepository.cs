@@ -23,6 +23,9 @@ namespace Network.Data.Repository.Interfaces
 
         bool Update(TEntity entityToUpdate);
 
+        bool UpdateWithChilds(TEntity entityToUpdate, HashSet<Type> childTypes);
+        bool UpdateWithChilds<TEntityState>(TEntityState entityToUpdate, HashSet<Type> childTypes)
+        where TEntityState : BaseEntity, IObjectWithState;
         IEnumerable<TEntity> GetAll();
     }
 }

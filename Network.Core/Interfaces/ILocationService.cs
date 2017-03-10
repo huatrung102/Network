@@ -9,6 +9,7 @@ namespace Network.Core.Interfaces
 {
     public interface ILocationService : IBaseService<Location, Guid>
     {
-       
+        T getMapperDTO<T>(Location entity);
+        Location getFromMapperDTO<T>(T dto);
     }
 }

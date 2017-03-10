@@ -13,7 +13,8 @@ namespace Network.Common.Helper
         {
             try
             {
-                return new Guid(guid);
+                string temp = MvcHelper.DeserializeObject<string>(guid);
+                return new Guid(temp);
             }
             catch (Exception) { }
            

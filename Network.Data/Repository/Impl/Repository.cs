@@ -9,6 +9,10 @@ using Network.Data.Context;
 using Network.Common.Extensions;
 using Network.Data.UoW;
 using Network.Domain.Entity;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Core.Objects;
+using static Network.Domain.Enum.EType;
+using RefactorThis.GraphDiff;
 
 namespace Network.Data.Repository.Impl
 {
@@ -67,7 +71,7 @@ namespace Network.Data.Repository.Impl
                 Commit();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                
             }
@@ -112,18 +116,70 @@ namespace Network.Data.Repository.Impl
 
         }
 
-        public bool Update(TEntity entityToUpdate)
+        public virtual bool Update(TEntity entityToUpdate)
         {
             try
             {
-                context.Entry(entityToUpdate).State = EntityState.Modified;
+                //http://stackoverflow.com/questions/23201907/asp-net-mvc-attaching-an-entity-of-type-modelname-failed-because-another-ent
+                // context.Entry(entityToUpdate).State = EntityState.Modified;
+                context.Set<TEntity>().AddOrUpdate(entityToUpdate);
                 Commit();
                 return true;
             }
-            catch (Exception)
+            catch (NWException ex)
             {
-
+                //throw ex;
             }
+            return false;
+        }
+
+        public bool UpdateWithChilds(TEntity entityToUpdate, HashSet<Type> childTypes)
+        {
+            try
+            {
+                foreach (var entry in context.ChangeTracker.Entries<TEntity>())
+                {
+                    
+                    // if (entry.State == EntityState.Added && entry.Entity != entityToUpdate)
+                    ///*
+                    if (entry.Entity != entityToUpdate)
+                    {
+                        if (childTypes == null || childTypes.Count == 0)
+                        {
+                            entry.State = EntityState.Unchanged;
+                        }
+                        else
+                        {
+                            // request object type from context because we might got reference to dynamic proxy
+                            // and we wouldn't want to handle Type of dynamic proxy
+                            Type entityType = ObjectContext.GetObjectType(entry.Entity.GetType());
+                            // if type is not child type than it should not be saved so mark it as unchanged
+                            if (childTypes.Contains(entityType))
+                            {
+                                entry.State = EntityState.Unchanged;
+                            }
+                            else
+                            {                                
+                                entry.State = EntityState.Modified;
+                            }
+                        }
+                    }
+                   // */
+                }
+                // context.Entry(entityToUpdate).State = EntityState.Modified;
+                //  context.Set<TEntity>().AddOrUpdate(entityToUpdate);
+                Commit();
+                return true;
+            }
+            catch (NWException ex)
+            {
+                //throw ex;
+            }
+            return false;
+        }
+
+        public virtual bool UpdateWithChildsNew(TEntity entityToUpdate, HashSet<Type> childTypes)
+        {
             return false;
         }
 
@@ -156,6 +212,40 @@ namespace Network.Data.Repository.Impl
         {
             return dbSet.ToList();
         }
+        //http://stackoverflow.com/questions/21426884/generic-repository-to-update-an-entire-aggregate
+        private static void CheckForEntitiesWithoutStateInterface(NetworkContext context)
+        {
+            var entitiesWithoutState =
+            from e in context.ChangeTracker.Entries()
+            where !(e.Entity is IObjectWithState)
+            select e;
 
+            if (entitiesWithoutState.Any())
+            {
+                throw new NotSupportedException("All entities must implement IObjectWithState");
+            }
+        }
+        private static EntityState ConvertState(State state)
+        {
+            switch (state)
+            {
+                case State.Added:
+                    return EntityState.Added;
+                case State.Deleted:
+                    return EntityState.Deleted;
+                case State.Modified:
+                    return EntityState.Modified;
+                case State.Unchanged:
+                    return EntityState.Unchanged;
+                default:
+                    return EntityState.Unchanged;
+            }
+
+        }
+
+        public bool UpdateWithChilds<TEntityState>(TEntityState entityToUpdate, HashSet<Type> childTypes) where TEntityState : BaseEntity, IObjectWithState
+        {
+            throw new NotImplementedException();
+        }
     }
 }

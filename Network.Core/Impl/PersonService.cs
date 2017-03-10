@@ -9,12 +9,15 @@ using Network.Data.Repository.Interfaces;
 using Network.Data.Repository.Impl;
 using Network.Core.Impl;
 using Network.Data.UoW;
+using AutoMapper;
 
 namespace Network.Core.Impl
 {
-    public class PersonService : BaseService<Person,Guid>, IPersonService
+    public class PersonService //: BaseService<Person,Guid>, IPersonService
     {
-       public PersonService(UnitOfWork UnitOfWork) : base(UnitOfWork) { }
-        public PersonService() : base() { }
+      // public PersonService(UnitOfWork UnitOfWork) : base(UnitOfWork) { }
+     //  public PersonService() : base() { }
+
+    
     }
 }

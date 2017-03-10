@@ -1,7 +1,10 @@
-﻿using Network.Common.Helper;
+﻿using Network.Common.Extensions;
+using Network.Common.Helper;
 using Network.Core.Impl;
 using Network.Core.Interfaces;
+using Network.Domain.DTO;
 using Network.Domain.Entity;
+using Network.Domain.Enum;
 using Network.Web.Test;
 using System;
 using System.Collections.Generic;
@@ -15,67 +18,80 @@ namespace Network.Web.Controllers
     {
        // public IEnumerable<Person> Persons;
         private IPersonService _IPersonService;
+        
         public PartnerController(): base() {
-            _IPersonService = new PersonService(new Data.UoW.UnitOfWork());
-            
+            _IService = new PartnerService(UnitOfWork);
+           // _IPersonService = new PersonService(UnitOfWork);
         }
+       
         // GET: Partner
         public ActionResult Index()
         {
-            return View(_IService.GetAllToView());
+           // _IService.GetAllToView()
+            return View(new PartnerDTO());
             
         }
 
+        public JsonResult getAllEntity()
+        {
+            var dto = _IService.GetAllToView()
+                        .Select(p => _IService.getMapperDTO<PartnerDTO>(p))                        
+                        .ToList();                  
+                     
+            return Json(dto, JsonRequestBehavior.AllowGet);
+        }
         // GET: Partner/Details/5
         public ActionResult Details(int id)
         {
+
             return View();
         }
 
         // GET: Partner/Create
         public ActionResult Create()
         {
-            ViewBag.PersonId = new SelectList(_IPersonService.GetAllToView(),"PersonId","PersonName") ;
-            return View();
+            //ViewBag.PartnerTypeEnum =  EType.PartnerTypeEnum
+          //  ViewBag.PersonId = new SelectList(_IPersonService.GetAllToView(),"PersonId","PersonName") ;
+            return View(new PartnerDTO());
         }
-
+        private Partner getEntityFromDto(string dto)
+        {
+            //PartnerDTO dtoObj = MvcHelper.DeserializeObject<PartnerDTO>(dto);
+            Partner p = _IService.getFromMapperDTO(dto);          
+            return p;
+        }
         // POST: Partner/Create
-        [HttpPost]
-        public ActionResult Create(Partner p)
+        [HttpPost]        
+        public string Create(string dto)
         {
             try
-            {                
-                p.PartnerId = GuidHelper.CheckAndRefreshGuid(p.PartnerId.ToString());                
-                _IService.Add(p);
-                return RedirectToAction("Index");
+            {               
+                Partner p = getEntityFromDto(dto);  
+                bool result =_IService.Add(p);
+                return JsonOk();
+           
             }
-            catch (Exception ex)
+            catch (NWException ex)
             {
-                return View();
+                return JsonError(ex);
             }
         }
 
-        // GET: Partner/Edit/5
-        public ActionResult Edit(string id)
-        {
-            Partner p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
-            ViewBag.PersonId = new SelectList(_IPersonService.GetAllToView(), "PersonId", "PersonName");
-            return View(p);
-        }
-
+       
+       
         // POST: Partner/Edit/5
         [HttpPost]
-        public ActionResult Edit(Partner p)
+        public string Edit(string id,string dto)
         {
             try
             {
-
-                _IService.Update(p);
-                return RedirectToAction("Index");
+                Partner p = getEntityFromDto(dto);
+                bool result = _IService.Update(p);
+                return JsonOk();
             }
-            catch
+            catch (NWException ex)
             {
-                return View();
+                return JsonError(ex);
             }
         }
 

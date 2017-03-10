@@ -9,6 +9,7 @@ namespace Network.Core.Interfaces
 {
     public interface IPartnerService : IBaseService<Partner, Guid>
     {
-        
+       
+       
     }
 }

@@ -1,55 +1,97 @@
-﻿@model Network.Domain.Entity.Document
+﻿@model Network.Domain.DTO.DocumentDTO
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div class="modal-dialog">
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Document</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.LocationId, "LocationId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("LocationId",(SelectList) ViewBag.LocationId, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DocumentNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DocumentNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DocumentDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DocumentDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DocumentDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        
+    <!-- Modal content-->
+    <div class="modal-content">
       
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Document</h3>
             </div>
-        </div>
-    </div>
-}
+            <div class="modal-body">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                <div class="form-horizontal" data-bind="with:DTO">
+                    <h4>Create</h4>
+                    <hr />
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: DocumentNumber" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <select style="width:295px!important" data-bind="options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DocumentDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: DocumentDescription" />
+                        </div>
+                    </div>
+                   
+                    
+
+
+                    <div data-bind="foreach: DocumentFileAttachments">
+                        <div class="form-group">
+                            <div class="col-md-7">
+                                <input data-bind="attr:{'id': FileAttachmentId},event:{change: $root.changeFile1}" type="file" class="fileChooser form-control" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="" data-bind1="checked: FileAttachmentStatus" />Active
+                            </div>   
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input type="text" class="col-md-9 form-control" data-bind="value: FileName" />
+                            </div>
+                            <div class="col-md-3">
+                                
+                          <input type="checkbox" class="" data-bind="checked: FileAttachmentStatus" />
+                                
+</div>
+                            <div class="col-md-3">
+                                <button data-bind="click: $root.deleteFileAttachment" class="btn btn-xs btn-danger">remove</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-7">
+                                <select style="width:295px!important" data-bind="options: $root.documentType, optionsText: 'Text', optionsValue: 'Value', value: DocumentType" class="col-xs-12 "></select>
+                            </div>
+                            <div class="col-md-5">
+                                <input placeholder="" type="text" class="datepicker  form-control" data-bind="value: FileAttachmentValidDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button data-bind="click: $root.createFileAttachment" class="btn btn-primary">Add File</button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button  data-bind="click: create" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+
+            </div>
+       
+    </div>
+
 </div>

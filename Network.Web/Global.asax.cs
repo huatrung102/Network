@@ -1,9 +1,5 @@
-﻿using Network.Common.Binder;
+﻿using Network.Core.Mapping;
 using Network.UI.App_Start;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -19,6 +15,8 @@ namespace Network.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //using for trim model sourceKey TrimModelBinder
             // ModelBinders.Binders.Add(typeof(decimal), new TrimModelBinder());
+
+            ModelMapping.Register();
         }
     }
 }

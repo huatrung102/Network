@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Network.Domain.Entity
 {
-    //định nghĩa hiện trạng mặt bằng
+    //định nghĩa hiện trạng mặt bằng -  not use
     public class IntegrityPlan : BaseEntity
     {
         public IntegrityPlan()

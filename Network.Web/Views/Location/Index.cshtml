@@ -1,98 +1,270 @@
-﻿@model IEnumerable<Network.Domain.Entity.Location>
+﻿@model Network.Domain.DTO.LocationDTO
 
+@using Network.Domain.Enum
+
+
+@using Network.Common.Helper
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationParentCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationPhone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationFax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationArea)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationAreaM2)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.LocationDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </th>
-       
-        <th></th>
-    </tr>
+<div class="col-md-5">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationParentCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationPhone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationFax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationArea)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationAreaM2)
-        </td>
-       
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-      
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocationId })
-        </td>
-    </tr>
+</div>
+<div class="col-md-7">
+
+</div>
+<div class="col-md-5">
+    <h2>Index</h2>
+
+    <p>
+
+        <a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+           data-target="#myModalCreate" data-bind="click: function(){createView();} ">Create New</a>
+
+    </p>
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.LocationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocationCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocationAddress)
+            </th>
+
+            <th></th>
+        </tr>
+        <tbody data-bind='foreach: locations'>
+            <tr>
+                <td>
+                    <span class="" data-bind="text: LocationName">1</span>
+                </td>
+                <td>
+                    <span class="" data-bind="text: LocationCode">1</span>
+                </td>
+                <td>
+                    <span class="" data-bind="text: LocationAddress">1</span>
+                </td>
+
+                <td>
+                    <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                            data-target="#myModalEdit" data-bind="click: $parent.editView" name="" value=""
+                            class="btn btn-xs btn-success">
+                        Edit
+                    </button>
+
+                    <button class="btn btn-xs btn-success" data-bind="click: function(){ viewMap($data);}">View map</button>
+                </td>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>
+<div class="col-md-7">
+    <div class="box box-info">
+        <div class="box-header">
+            Map
+            <input type="button" value="View fullscreen" class="btn btn-flat btn-info pull-right" data-bind="click: viewFullScreen" />
+        </div>
+        <div class="box-body">
+            <style>
+                .map {
+                    height: 500px;
+                }
+            </style>
+            <div>
+
+                <!--<div class="map" data-bind="map: { latitude:  selectedLocation.latitude, longitude:  selectedLocation.longitude,locationName:  selectedLocation.locationName }">-->
+                <div id="maps" class="map" data-bind="maps: locations"></div>
+                <!--   <div id="maps" class="map" data-bind="map: selectedLocation"></div>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="box-footer">
+    </div>
+</div>
+
+
+<div id="myModalCreate" class="modal fade" role="dialog">
+    @Html.Partial("Create", Model)
+</div>
+<div id="myModalEdit" class="modal fade" role="dialog">
+    @Html.Partial("Edit", Model)
+</div>
+
+
+@section scripts {
+    <section class="scripts">
+        <script src="http://maps.google.com/maps/api/js?key=AIzaSyDNPMEE4w3D9ojQ5kC31OxsidNlNN7m5SI"></script>
+        <script type="text/javascript">
+
+            var locationVM;
+
+            var LocationDto = function (data) {
+                var self = this;
+                ko.mapping.fromJS(data, null, this);
+                self.selected = ko.observable(false);
+
+            }
+            var MainViewModel = function (json) {
+                var self = this;
+
+                ko.mapping.fromJS(json, null, this);
+
+                self.locations = ko.observableArray();
+
+                self.selectedLocation = ko.observable();
+                self.oldselectedLocation = ko.observable();
+
+                self.editView = function (data) {
+                    self.oldselectedLocation = self.selectedLocation();
+                    self.selectedLocation(data);
+                };
+
+                self.selectedLocation.subscribe(function (newValue) {
+                    if (self.oldselectedLocation != null) {
+                        console.log('do something');
+                    }
+
+                });
+                self.loadTable = function () {
+                    var result = [];
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity")',
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        console.log(data);
+                        var mappedLocation = $.map(data, function (item) { return new LocationDto(item) });
+                        self.locations(mappedLocation);
+                    });
+                }
+                self.loadTable();
+
+                self.viewFullScreen = function () {
+
+                }
+                self.createView = function () {
+
+                }
+                self.create = function () {
+
+                }
+                self.edit = function () {
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.selectedLocation) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Edit")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalEdit').modal('hide')
+                            self.loadTable();
+                            //   map.clearMarkers();
+                            window.location.href='@(Url.Action("Index", "Location"))';
+                            @*{ Response.Redirect("~/Location/");}*@
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+                }
+                locationVM = self;
+            }
+
+
+
+
+
+            function createMap() {
+                var latlng = new google.maps.LatLng(0.0, 0.0);
+                var myOptions =
+                {
+                    zoom: 11,
+                    center: latlng,
+                    panControl: false,
+                    zoomControl: false,
+                    zoomControlOptions: {
+                        style: google.maps.ZoomControlStyle.BIG,
+                        position: google.maps.ControlPosition.TOP_RIGHT
+                    },
+                    scaleControl: false,
+                    streetViewControl: false,
+                    overviewMapControl: false,
+                    mapTypeControl: false,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+                google.maps.event.addListener(map, 'click', function (event) {
+                    if (locationVM != null && locationVM.selectedLocation() != null) {
+                        locationVM.selectedLocation().LocationLatitude(event.latLng.lat());
+                        locationVM.selectedLocation().LocationLongitude(event.latLng.lng());
+                    }
+                });
+            }
+            function getAllLocation() {
+
+            };
+            $(document).ready(function () {
+                /*
+                ko.bindingHandlers.map = {
+                    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                        var objMap = allBindingsAccessor().map();
+                        var latlng = new google.maps.LatLng(objMap.LocationLatitude(), objMap.LocationLongitude());
+
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: latlng,
+                            icon: 'Icons/star.png',
+                            draggable: true,
+                            title: objMap.LocationName()
+                        });
+
+                        google.maps.event.addListener(marker, 'click', function () {
+                           // viewModel.select()
+                        });
+
+                       // markers.push(marker);
+                        viewModel._mapMarker = marker;
+                    },
+                    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                        var objMap = allBindingsAccessor().map();
+                        var latlng = new google.maps.LatLng(objMap.LocationLatitude(), objMap.LocationLongitude());
+
+                        viewModel._mapMarker.setPosition(latlng);
+
+                        viewModel._mapMarker.setIcon('../../Img/star_green.png');
+                    }
+                };
+                */
+                locationList = getAllLocation();
+                var model = JSON.parse(@Html.ModelToJSon(Model));
+               // createMap();
+                ko.applyBindings(new MainViewModel(model), document.getElementById("page-content"));
+            });
+        </script>
+    </section>
 }
 
-</table>

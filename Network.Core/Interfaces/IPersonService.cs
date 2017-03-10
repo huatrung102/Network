@@ -9,6 +9,7 @@ namespace Network.Core.Interfaces
 {
     public interface IPersonService : IBaseService<Person, Guid>
     {
-        
+        T getMapperDTO<T>(Person entity);
+        Person getFromMapperDTO<T>(T dto);
     }
 }

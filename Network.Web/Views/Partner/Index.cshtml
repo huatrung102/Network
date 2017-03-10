@@ -1,5 +1,9 @@
-﻿@model IEnumerable<Network.Domain.Entity.Partner>
+﻿@model Network.Domain.DTO.PartnerDTO
 
+@using Network.Domain.Enum
+
+
+@using Network.Common.Helper
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,13 +12,14 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
+    <a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal"
+       data-target="#myModalCreate" data-bind="click: function(){createView();} ">Create New</a>
+
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Person.PersonName)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.PartnerName)
         </th>
@@ -22,43 +27,181 @@
             @Html.DisplayNameFor(model => model.PartnerPhone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
+            @Html.DisplayNameFor(model => model.PartnerType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
+            @Html.DisplayNameFor(model => model.PersonName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
+
         <th></th>
     </tr>
+    <tbody data-bind='foreach: partners'>
+        <tr>
+            <td>
+                <span class="" data-bind="text: PartnerName">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: PartnerPhone">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: PartnerType">1</span>
+            </td>
+            <td>
+                <span class="" data-bind="text: PersonName? PersonName : 'N/A'">1</span>
+            </td>
+            <td>
+                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
+                        data-target="#myModalEdit" data-bind="click: function(){$root.editView();} " name="" value=""
+                        class="btn btn-xs btn-success">
+                    Edit
+                </button>
+            </td>
+        </tr>
+    </tbody>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Person.PersonName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartnerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartnerPhone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PartnerId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PartnerId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PartnerId })
-        </td>
-    </tr>
-}
 
 </table>
+<div id="myModalCreate" class="modal fade" role="dialog">
+    @Html.Partial("Create", Model)
+</div>
+<div id="myModalEdit" class="modal fade" role="dialog">
+    @Html.Partial("Edit", Model)
+</div>
+
+
+@section scripts {
+    <section class="scripts">
+        <script type="text/javascript">
+
+            var DTO = function (data) {
+                ko.mapping.fromJS(data, null, this);
+            }
+
+            var MainViewModel = function (json) {
+                var self = this;
+                ko.mapping.fromJS(json, null, this);
+                self.DTO = new DTO(json);
+                
+                self.partners = ko.observableArray();         
+                self.partnerType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.PartnerTypeEnum>())'));
+                self.selectedDTO = ko.observable();
+
+               self.loadTable = function () {
+                    self.partners.removeAll();
+
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        var mappedObj = $.map(data, function (item) {
+                            return new DTO(item);
+                        });
+                        if (mappedObj.length === 0) {
+                            var p = new DTO(json);
+                          //  p.DocumentFileAttachments = ko.observableArray();
+                            self.partners.push(p);
+                        }
+
+                        else self.partners(mappedObj);
+                    });
+                }
+                self.createView = function () {
+                    $('#myModalCreate').modal('show');
+                    $("select").select2({
+                        dropdownParent: $("#myModalCreate")
+                    });
+                   
+                }
+                self.createFileAttachment = function () {
+                    self.DTO.DocumentFileAttachments.push(new DTO(JSON.parse(@Html.ModelToJSon(
+                    new Network.Domain.DTO.DocumentFileAttachmentDTO()))))
+                }
+                self.create = function () {
+                    self.DTO.StaffId(UUID());
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.DTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Create")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalCreate').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+
+                };
+                
+                self.editView = function (data) {
+                    self.selectedDTO(data);
+                    $("select").select2({
+                        dropdownParent: $("#myModalEdit")
+                    });
+
+                }
+
+                self.edit = function (data) {
+
+                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                    var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
+                    var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("Edit")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+
+                    }).success(function (data) {
+                        data = JSON.parse(data);
+                        if (data.ResponseCode == 1) {
+                            toastr.success(messageCreateOK);
+                            $('#myModalEdit').modal('hide')
+                            self.loadTable();
+                        } else {
+                            console.log('error:' + data);
+                        }
+
+                    });;
+                };
+                self.getDetailView = function (id) {
+
+                };
+                self.viewDetail = function (data) {
+                    console.log('data:' + data)
+                    self.getDetailView({ id: data.DepartmentId() });
+                };
+
+                self.loadTable();
+                
+            }
+
+            $(function () {
+                var model = JSON.parse(@Html.ModelToJSon(Model));
+                ko.applyBindings(new MainViewModel(model), document.getElementById("page-content"));
+            })
+
+        </script>
+    </section>
+}
+

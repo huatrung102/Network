@@ -1,6 +1,14 @@
 ﻿@using Network.Web.Controllers
+
+@*{
+        var controlRoute = ViewContext.RouteData.Values["Controller"].ToString();
+    }*@
+
+
+
 <aside class="main-sidebar">
     <section class="sidebar">
+        <!--
         @* BEGIN Search *@
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -12,30 +20,136 @@
                 </span>
             </div>
         </form>
+        -->
         @* END Search *@
         @* BEGIN Menu *@
         <ul class="sidebar-menu">
-            <li class="header">HEADER</li>
-            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(HomeController.Index) ? "active" : "")">
+            <li class="header">MENU</li>
+            <li class="">
                 <a href="@Url.Action("Index", "Home")"><i class="fa fa-link"></i> <span>Home</span></a>
             </li>
-           
+            <li class="">
+                <a href="@Url.Action("Index", "Location")"><i class="fa fa-link"></i> <span>Home</span></a>
+            </li>
+            <li class="">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-link"></i> <span>Home</span></a>
+            </li>
+
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-link"></i> <span>Person</span>
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Location</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Location")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Location")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Document</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class=" ">
-                        <a href="@Url.Action("Index", "Person")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                        <a href="@Url.Action("Index", "Document")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
                     </li>
                     <li class=" ">
-                        <a href="@Url.Action("Create", "Person")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                        <a href="@Url.Action("Create", "Document")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
                     </li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Contract</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Contract")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Contract")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Staff</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Staff")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Staff")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Department</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Department")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Department")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li>
+          <!-- <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>Positions</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Position")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Position")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li> -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Partner</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=" ">
+                        <a href="@Url.Action("Index", "Partner")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+                    </li>
+                    <li class=" ">
+                        <a href="@Url.Action("Create", "Partner")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+                    </li>
+                </ul>
+            </li>
+         
+           
         </ul>
         @* END Menu *@
     </section>
