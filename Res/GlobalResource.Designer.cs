@@ -79,6 +79,42 @@ namespace Res {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HOPDONG.
+        /// </summary>
+        public static string ContractTypeEnum_HopDong {
+            get {
+                return ResourceManager.GetString("ContractTypeEnum_HopDong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHULUC.
+        /// </summary>
+        public static string ContractTypeEnum_Phuluc {
+            get {
+                return ResourceManager.GetString("ContractTypeEnum_Phuluc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail.
+        /// </summary>
+        public static string DepartmentGroupEnum_BANLE {
+            get {
+                return ResourceManager.GetString("DepartmentGroupEnum_BANLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonstrator.
+        /// </summary>
+        public static string DepartmentGroupEnum_TACNGHIEP {
+            get {
+                return ResourceManager.GetString("DepartmentGroupEnum_TACNGHIEP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location&apos;s Address.
         /// </summary>
         public static string Location_Address {
@@ -313,6 +349,15 @@ namespace Res {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Positions.
+        /// </summary>
+        public static string Menu_Position {
+            get {
+                return ResourceManager.GetString("Menu_Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Staffs.
         /// </summary>
         public static string Menu_Staff {
@@ -354,6 +399,42 @@ namespace Res {
         public static string PartnerHp_PartnerHpType_Old {
             get {
                 return ResourceManager.GetString("PartnerHp_PartnerHpType_Old", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string SchedulePaymentEnum_MONTHLY {
+            get {
+                return ResourceManager.GetString("SchedulePaymentEnum_MONTHLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterly.
+        /// </summary>
+        public static string SchedulePaymentEnum_QUARTERLY {
+            get {
+                return ResourceManager.GetString("SchedulePaymentEnum_QUARTERLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SemiYearly.
+        /// </summary>
+        public static string SchedulePaymentEnum_SEMIYEARLY {
+            get {
+                return ResourceManager.GetString("SchedulePaymentEnum_SEMIYEARLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yearly.
+        /// </summary>
+        public static string SchedulePaymentEnum_YEARLY {
+            get {
+                return ResourceManager.GetString("SchedulePaymentEnum_YEARLY", resourceCulture);
             }
         }
     }

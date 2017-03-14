@@ -19,8 +19,9 @@ namespace Network.Domain.Entity
             
             this.LocationFileAttachments = new HashSet<LocationFileAttachment>();
             this.Contracts = new HashSet<Contract>();
-            this.Departments = new HashSet<Department>();
-            
+         
+            this.Staffs = new HashSet<Staff>();
+
         }
         [MaxLength(50)]
         public string LocationName { get; set; }
@@ -57,7 +58,7 @@ namespace Network.Domain.Entity
 
         public virtual ICollection<Contract> Contracts { get; set; }
 
-        public virtual ICollection<Department> Departments { get; set; }
-
+       
+        public virtual ICollection<Staff> Staffs { get; set; }
     }
 }

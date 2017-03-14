@@ -123,6 +123,18 @@
   <data name="Action_Edit_Success" xml:space="preserve">
     <value>Edited {0} successfully !!!</value>
   </data>
+  <data name="ContractTypeEnum_HopDong" xml:space="preserve">
+    <value>HOPDONG</value>
+  </data>
+  <data name="ContractTypeEnum_Phuluc" xml:space="preserve">
+    <value>PHULUC</value>
+  </data>
+  <data name="DepartmentGroupEnum_BANLE" xml:space="preserve">
+    <value>Retail</value>
+  </data>
+  <data name="DepartmentGroupEnum_TACNGHIEP" xml:space="preserve">
+    <value>Demonstrator</value>
+  </data>
   <data name="Location_Address" xml:space="preserve">
     <value>Location's Address</value>
   </data>
@@ -201,6 +213,9 @@
   <data name="Menu_Partner_View" xml:space="preserve">
     <value>View Partners</value>
   </data>
+  <data name="Menu_Position" xml:space="preserve">
+    <value>Positions</value>
+  </data>
   <data name="Menu_Staff" xml:space="preserve">
     <value>Staffs</value>
   </data>
@@ -215,5 +230,17 @@
   </data>
   <data name="PartnerHp_PartnerHpType_Old" xml:space="preserve">
     <value>Old</value>
+  </data>
+  <data name="SchedulePaymentEnum_MONTHLY" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="SchedulePaymentEnum_QUARTERLY" xml:space="preserve">
+    <value>Quarterly</value>
+  </data>
+  <data name="SchedulePaymentEnum_SEMIYEARLY" xml:space="preserve">
+    <value>SemiYearly</value>
+  </data>
+  <data name="SchedulePaymentEnum_YEARLY" xml:space="preserve">
+    <value>Yearly</value>
   </data>
 </root>

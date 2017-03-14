@@ -20,7 +20,7 @@ namespace Network.Domain.Entity
         //để dành sau này design giao diện org chart
         public int? PositionParentCode { get; set; }
 
-        public EType.PositionGroupEnum PositionGroup { get; set; }
+        
 
         public virtual ICollection<Staff> Staffs { get; set; }
 

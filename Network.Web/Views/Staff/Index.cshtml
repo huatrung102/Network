@@ -10,9 +10,7 @@
 
 <p>
 
-
-    <a href="#" data-backdrop="static" data-keyboard="false"  data-bind="click: function(){createView();} ">Create New</a>
-
+    <a href="#" data-bind="click: function(){createView();} ">Create New</a>
 
 </p>
 <table class="table">
@@ -66,8 +64,7 @@
             </td>
            
             <td>
-                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                        data-target="#myModalEdit" data-bind="click: $parent.editView" name="" value=""
+                <button  data-bind="click: $parent.editView" name="" value=""
                         class="btn btn-xs btn-success">
                     Edit
                 </button>
@@ -103,6 +100,7 @@
                 self.staffs = ko.observableArray();
                 self.positions = ko.observableArray();
                 self.departments = ko.observableArray();
+                self.locations = ko.observableArray();
                 self.selectedDTO = ko.observable();
 
                 self.isLeader = ko.observable(false);
@@ -128,9 +126,9 @@
                         backdrop: 'static',
                         keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
-                    $("select").select2({
-                        dropdownParent: $("#myModalCreate")
-                    });
+                    
+                    updateSelectUI($("#myModalCreate"));
+                    updateCheckboxUI();
                   //  $("select").chosen('destroy').chosen();
                 }
 
@@ -164,7 +162,20 @@
 
                 };
 
+                self.loadLocation = function () {
+                    self.locations.removeAll();
+                    $.ajax({
+                        method: "GET",
+                        url: '@Url.Action("getAllEntity","Location")',
+                        async: true,
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (data) {
+                        $.each(data, function (idx, item) {
+                            self.locations.push(item);
 
+                        })
+                    });
+                };
                 self.loadDepartment = function () {
                     self.departments.removeAll();
                     $.ajax({
@@ -195,18 +206,14 @@
                 };
 
                 self.editView = function (data) {                   
-                    self.selectedDTO(data);
-                    //  $("select").chosen('destroy').chosen();
-                    //$("select").select2('destroy').select2().trigger('change');
-                    //$("select").select2('destroy');
+                    self.selectedDTO(data);                   
                     $('#myModalEdit').modal({
                         backdrop: 'static',
                         keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
-                    $("select").select2({
-                        dropdownParent: $("#myModalEdit")
-                    });
-                    
+                  
+                    updateSelectUI($("#myModalEdit"));
+                    updateCheckboxUI();
                 }
 
                 self.edit = function (data) {
@@ -237,26 +244,19 @@
 
                     });;
                 };
-                self.getDetailView = function (id) {
-
-                };
+                
                 self.viewDetail = function (data) {
                     console.log('data:' + data)
                     self.getDetailView({ id: data.DepartmentId() });
                 };
-
-                self.DTO.PositionId.subscribe(function (newValue) {
-
-                })
+                               
 
                 var checkIsLeader = function (positionId) {
-                    var selectedPosition = $.Enumerable.From(self.positions()).Single(function (x) {
-                        // console.log(x.PositionId + ' | ' + obj.PositionId())
+                    var selectedPosition = $.Enumerable.From(self.positions()).Single(function (x) {                     
                         return x.PositionId === positionId;
 
                     });
-                    if (selectedPosition !== undefined) {
-                        //self.isLeader(selectedPosition.PositionIsLeader);
+                    if (selectedPosition !== undefined) {                       
                         return selectedPosition.PositionIsLeader;
                     }
                     return false;
@@ -273,7 +273,7 @@
                 self.loadTable();
                 self.loadDepartment();
                 self.loadPosition();
-                self.isLeader(self.positions()[0].PositionIsLeader);
+              //  self.isLeader(self.positions()[0].PositionIsLeader);
 
             }
 

@@ -166,12 +166,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\authenticate\manage.js" />
-    <Content Include="app\home\view.html" />
-    <Content Include="app\home\view.js" />
-    <Content Include="app\main.js" />
-    <Content Include="app\shell.html" />
-    <Content Include="app\shell.js" />
     <Content Include="Content\css\AdminLTE.css" />
     <Content Include="Content\css\AdminLTE.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -328,6 +322,7 @@
     <Content Include="img\photo2.png" />
     <Content Include="img\photo3.jpg" />
     <Content Include="img\photo4.jpg" />
+    <Content Include="img\star_blue.png" />
     <Content Include="img\star_green.png" />
     <Content Include="img\star_red.png" />
     <Content Include="img\user1-128x128.jpg" />
@@ -524,6 +519,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -687,6 +683,7 @@
     <Folder Include="lib\AdminLTE\dist\css\alt\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Cost\" />
+    <Folder Include="Views\Language\" />
     <Folder Include="Views\Position\" />
   </ItemGroup>
   <ItemGroup>

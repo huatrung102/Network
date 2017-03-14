@@ -1,9 +1,52 @@
 ﻿var map;
-var markers = [];
+var mapSingle;
+var mapEdit;
+var markerInsert;
+var markerEdit;
 var infowindow;
 var windowURL = window.URL || window.webkitURL;
 $(function () {
     "use strict";
+
+    // extends observable objects intelligently
+    ko.utils.extendObservable = function (target, source) {
+        var prop, srcVal, isObservable = false;
+
+        for (prop in source) {
+
+            if (!source.hasOwnProperty(prop)) {
+                continue;
+            }
+
+            if (ko.isWriteableObservable(source[prop])) {
+                isObservable = true;
+                srcVal = source[prop]();
+            } else if (typeof (source[prop]) !== 'function') {
+                srcVal = source[prop];
+            }
+
+            if (ko.isWriteableObservable(target[prop])) {
+                target[prop](srcVal);
+            } else if (target[prop] === null || target[prop] === undefined) {
+
+                target[prop] = isObservable ? ko.observable(srcVal) : srcVal;
+
+            } else if (typeof (target[prop]) !== 'function') {
+                target[prop] = srcVal;
+            }
+
+            isObservable = false;
+        }
+        return target;
+    };
+
+    ko.utils.clone = function (obj, emptyObj) {
+        var json = ko.toJSON(obj);
+        var js = JSON.parse(json);
+
+        return ko.utils.extendObservable(emptyObj, js);
+    };
+
     //http://stackoverflow.com/questions/6612705/jquery-ui-datepicker-change-event-not-caught-by-knockoutjs
 
     ko.bindingHandlers.datepicker = {
@@ -39,21 +82,21 @@ $(function () {
                 }
 
                 var current = $(element).datepicker("getDate");
-                if (moment(current, 'dd/mm/yyyy',true).isValid()) {
-                   
+                if (moment(current, 'dd/mm/yyyy', true).isValid()) {
+
                     var parsedDate = moment(value, 'DD/MM/YYYY').format('DD/MM/YYYY');
                     $(element).datepicker({
-                      //  dateFormat: 'dd/mm/yyyy',
+                        //  dateFormat: 'dd/mm/yyyy',
                         setDate: parsedDate
                     });
-                   // $(element).text();
+                    // $(element).text();
                     $(element).val(parsedDate);
-                }else
+                } else
                     $(element).val(value);
-                
+
             }
-            
-            
+
+
         }
     };
 
@@ -86,7 +129,7 @@ $(function () {
             });
         },
 
-        update: function (element, valueAccessor, allBindingsAccessor,viewmodel) {
+        update: function (element, valueAccessor, allBindingsAccessor, viewmodel) {
             var file = ko.utils.unwrapObservable(valueAccessor());
             var bindings = allBindingsAccessor();
 
@@ -95,7 +138,7 @@ $(function () {
                 if (oldUrl) {
                     windowURL.revokeObjectURL(oldUrl);
                 }
-            //    bindings.fileObjectURL(file && windowURL.createObjectURL(file));
+                //    bindings.fileObjectURL(file && windowURL.createObjectURL(file));
             }
 
             if (bindings.fileBinaryData && ko.isObservable(bindings.fileBinaryData)) {
@@ -106,172 +149,221 @@ $(function () {
                     reader.onload = function (e) {
                         bindings.fileBinaryData(e.target.result);
                     };
-                 //   reader.readAsArrayBuffer(file);
+                    //   reader.readAsArrayBuffer(file);
                 }
             }
         }
     };
 
     //ko extend google map
-   
-    ///*
-    ko.bindingHandlers.map = {
-        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            var mapObj = ko.utils.unwrapObservable(valueAccessor());
-            var latLng = new google.maps.LatLng(mapObj.LocationLatitude(), mapObj.LocationLongitude());
-               
-            var mapOptions = {
-                center: latLng,
-                zoom: 6,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
 
-            map = new google.maps.Map(element, mapOptions);            
-            google.maps.event.addDomListener(window, 'load', function () {
-                console.log('alert');
+    ///*
+    ko.bindingHandlers.map1 = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+            var mapObj = ko.utils.unwrapObservable(valueAccessor());//;
+
+            var model = allBindingsAccessor().model;
+            var latLng;
+            if (model().LocationLatitude() == undefined || model().LocationLatitude() === 0
+                || model().LocationLongitude() == undefined || model().LocationLongitude() === 0)
+                latLng = new google.maps.LatLng(15.9857498, 105.7729918);
+            else
+                latLng = new google.maps.LatLng(model().LocationLatitude(), model().LocationLongitude());
+
+            google.maps.event.addDomListener(window, 'resize', function () {
+                var center = mapObj.getCenter();
+                mapObj.setCenter(center);
             });
+            // And aditionally you can need use "trigger" for real responsive
+            google.maps.event.trigger(mapObj, "resize");
+
             var marker = new google.maps.Marker({
-                map: map,
+                map: mapObj,
                 position: latLng,
                 //title: "You Are Here",
                 draggable: true
             });
-
-            var basewindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h2>" + mapObj.LocationName() + "</div></div>"
+            mapObj.addListener('center_changed', function () {
+                // 0.5 seconds after the center of the map has changed, pan back to the
+                // marker.
+                window.setTimeout(function () {
+                    mapObj.panTo(marker.getPosition());
+                }, 500);
             });
-            var infowindow = basewindow;
             mapObj.onChangedCoord = function (newValue) {
                 var latLng = new google.maps.LatLng(
-                    ko.utils.unwrapObservable(mapObj.LocationLatitude()),
-                    ko.utils.unwrapObservable(mapObj.LocationLongitude()));
-                map.setCenter(latLng);
+                    ko.utils.unwrapObservable(model().LocationLatitude()),
+                    ko.utils.unwrapObservable(model().LocationLongitude()));
+                mapObj.setCenter(latLng);
             };
 
             mapObj.onMarkerMoved = function (dragEnd) {
                 var latLng = marker.getPosition();
-                mapObj.LocationLatitude(latLng.lat());
-                mapObj.LocationLongitude(latLng.lng());
+                model().LocationLatitude(latLng.lat());
+                model().LocationLongitude(latLng.lng());
             };
-
-            mapObj.LocationLatitude.subscribe(mapObj.onChangedCoord);
-            mapObj.LocationLongitude.subscribe(mapObj.onChangedCoord);
-
-            google.maps.event.addDomListener(window, 'resize', function () {
-                var center = map.getCenter();
-                map.setCenter(center);
-            });
-            // And aditionally you can need use "trigger" for real responsive
-            google.maps.event.trigger(map, "resize");
+            model().LocationLatitude.subscribe(mapObj.onChangedCoord);
+            model().LocationLongitude.subscribe(mapObj.onChangedCoord);
 
             google.maps.event.addListener(marker, 'dragend', mapObj.onMarkerMoved);
-            google.maps.event.addListener(marker, 'click', function () {
-                //open info window
-                
-                infowindow.open(map, mapObj.marker);
+
+            viewModel._mapMarkerSingle = marker;
+
+            /*
+           
+
+            var basewindow = new google.maps.InfoWindow({
+                content: "<div class='infoDiv'><h2>" + model().LocationName() + "</div></div>"
             });
-            markers.push(marker);
-            viewModel._mapMarker = marker;
-           // $("#" + element.getAttribute("id")).data("mapObj", mapObj);
+            var infowindow = basewindow;
+           
+
+            
+
+
+            
+            //   markers.push(marker);
+           
+
+            // $("#" + element.getAttribute("id")).data("mapObj", mapObj);
+            */
         },
         update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+            var mapObj = ko.utils.unwrapObservable(valueAccessor());
+            var model = allBindingsAccessor().model;
+            // /*
+            var latLng;
+            if (model().LocationLatitude() == undefined || model().LocationLatitude() === 0
+                || model().LocationLongitude() == undefined || model().LocationLongitude() === 0)
+                latLng = new google.maps.LatLng(11.956703866197335, 107.37699570625);
+            else
+                latLng = new google.maps.LatLng(model().LocationLatitude(), model().LocationLongitude());
+            // model()._mapMarkerSingle.setMap(mapObj);
+            viewModel._mapMarkerSingle.setPosition(latLng);
+            viewModel._mapMarkerSingle.setIcon('Img/star_blue.png');
+            //  mapObj
+            //  */
+            //  map.setCenter(latLng);
             /*
             
     */
-    }
+        }
+    };
+
+    ko.bindingHandlers.map = {
+        // /*  
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+
+            var isEdit = allBindingsAccessor().isEdit;
+            var localMap = valueAccessor();
+            var position = isEdit ? new google.maps.LatLng(allBindingsAccessor().latitude(), allBindingsAccessor().longitude()) : localMap.getCenter();
+            var title = isEdit ? "isEdit" : '';
+            var marker = new google.maps.Marker({
+                map: localMap,
+                position: position,
+                icon: 'Img/star_red.png',
+                title: title
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+
+
+            });
+            localMap.addListener('center_changed', function () {
+                // 0.5 seconds after the center of the map has changed, pan back to the
+                // marker.
+                window.setTimeout(function () {
+                    localMap.panTo(marker.getPosition());
+                }, 500);
+            });
+
+            //  markers.push(marker);
+
+
+            if (isEdit) {
+                viewModel.selectedDTO()._mapMarker = marker;
+                markerEdit = marker;
+            }
+
+            else {
+                markerInsert = marker;
+                viewModel._mapMarker = marker;
+            }
+
+        },
+        // */
+
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var isEdit = allBindingsAccessor().isEdit;
+            var localMap = valueAccessor();
+            var position = allBindingsAccessor().latitude() !== 0 && allBindingsAccessor().longitude() !== 0 ? new google.maps.LatLng(allBindingsAccessor().latitude(), allBindingsAccessor().longitude()) : localMap.getCenter();
+            if (isEdit) {
+              //  viewModel.selectedDTO()._mapMarker.setPosition(position);
+                markerEdit.setPosition(position);
+                markerEdit.setIcon('Img/star_blue.png');
+            } else {
+                //  viewModel._mapMarker.setPosition(position);
+                markerInsert.setPosition(position);
+                markerInsert.setIcon('Img/star_blue.png');
+            }
+
+            
+                //   viewModel._mapMarker.setIcon(null);
+            
+           
+                //  viewModel._mapMarker.setMap(allBindingsAccessor().map);
+
+            
+
+        }
+
     };
     //*/
     ko.bindingHandlers.maps = {
-       // /*  
+        // /*  
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            var position = new google.maps.LatLng(allBindingsAccessor().latitude(), allBindingsAccessor().longitude());
 
-            markers = [];
-            var mapObjs = ko.utils.unwrapObservable(valueAccessor());
-                //ko.utils.unwrapObservable(valueAccessor());
+            var marker = new google.maps.Marker({
+                map: allBindingsAccessor().maps,
+                position: position,
+                icon: 'Icons/star.png',
+                title: name
+            });
 
-            var latLng = new google.maps.LatLng(
-                ko.utils.unwrapObservable(15.9857498),
-                ko.utils.unwrapObservable(105.7729918));
-           // 15.9857498, 105.7729918
-            var mapOptions = {
-                center: latLng,
-                zoom: 5,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            //  map.googleMap = new google.maps.Map(element, mapOptions);
-            map = new google.maps.Map(element, mapOptions);
-            
-            $.each(mapObjs, function (i, item) {
-                var Latlng = new google.maps.LatLng(item.LocationLatitude(), item.LocationLongitude());
-                console.log('x' + i + ': ' + item.LocationLatitude() + ' ' + item.LocationLongitude());
-
-                var marker = new google.maps.Marker({
-                    position: Latlng,
-                    map: map,
-                    title: item.LocationName(),
-                    
-                });
-                 marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-
-
-
-                markers.push(marker);
-
-                var basewindow = new google.maps.InfoWindow({
-                    content: "<div class='infoDiv'><h2>" + item.LocationName() + "</h2></div>"
-                });
-                infowindow = basewindow;
-                google.maps.event.addListener(marker, 'click', function () {
-                    //open info window
-                    
-                    if (infowindow) {
-                        infowindow.close();
-                    }                    
-                    infowindow.open(map, item.marker);
-                });
-                google.maps.Map.prototype.clearMarkers = function () {                   
-                    for (var i = 0; i < markers.length; i++)
-                    { markers[i].setMap(null); }
-                    markers.length = 0;
-                };
-                google.maps.Map.prototype.refreshMarkers = function () {
-                    for (var i = 0; i < markers.length; i++)
-                    { markers[i].setMap(map); }
-                };
-               
+            google.maps.event.addListener(marker, 'click', function () {
+                //viewModel.select();
 
             });
-            
+
+
+            //markers.push(marker);
+            viewModel._mapMarker = marker;
+
         },
-       // */
-        
+        // */
+
         update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-           
-            var mapObj = ko.utils.unwrapObservable(valueAccessor());
-            var latlng = new google.maps.LatLng(
-                ko.utils.unwrapObservable(mapObj.lat),
-                ko.utils.unwrapObservable(mapObj.lng));
-            /*  
+            var latlng = new google.maps.LatLng(allBindingsAccessor().latitude(), allBindingsAccessor().longitude());
+
             viewModel._mapMarker.setPosition(latlng);
 
-        if (viewModel.selected()) {
-            viewModel._mapMarker.setIcon('../../Img/star_green.png');
-            clearArr(stationMarkers);
+            if (viewModel.selected()) {
+                //   viewModel._mapMarker.setIcon(null);
+                viewModel._mapMarker.setIcon('Img/star_blue.png');
+                //  viewModel._mapMarker.setMap(allBindingsAccessor().map);
 
-            var stations = viewModel.parent.stations();
-            var nearest = nearestStationsVM(viewModel.lat(), viewModel.lng(), 5, stations);
-            addStationsToMap(nearest);
+            } else {
+                viewModel._mapMarker.setIcon('Img/star_red.png');
+            }
 
-
-        } else {
-            viewModel._mapMarker.setIcon('../../Img/star_red.png');
         }
-         //  */
-        }
-    
+
     };
-   // */
-  
+    // */
+
     //ko extend with https://gist.github.com/jasonhofer/d8d9f6d5feb160b9a28b
     ko.bindingHandlers.select2 = {
         init: function (element, valueAccessor, allBindingsAccessor) {
@@ -321,7 +413,7 @@ $(function () {
             contentType: "application/json; charset=utf-8",
             async: Vasync,
             data: JSON.stringify(paramsObj)
-        }).done(function (data) {            
+        }).done(function (data) {
             return data;
         });;
     };
@@ -345,12 +437,12 @@ $(function () {
 
         }).success(function (data) {
             if (data.ResponseCode === 1) {
-                toastr.success(successMessage);               
+                toastr.success(successMessage);
             }
-            
+
         });
     };
-    p.postWithRedirect = function (url, paramsObj, controller,action ,Vasync) {
+    p.postWithRedirect = function (url, paramsObj, controller, action, Vasync) {
         if (typeof Vasync === "undefined") {
             Vasync = false;
         }
@@ -371,13 +463,13 @@ $(function () {
 
         }).success(function (data) {
             if (data.ResponseCode === 1) {
-                toastr.success(successMessage);                
+                toastr.success(successMessage);
                 window.location.href = '@Url.Action(action,controller)';
             }
 
         });
     };
-   
+
     //defined namespace
     window.Ultra = new Ultra();
 }());

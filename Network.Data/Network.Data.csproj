@@ -55,73 +55,13 @@
   <ItemGroup>
     <Compile Include="Context\INetworkContext.cs" />
     <Compile Include="Context\NetworkContext.cs" />
-    <Compile Include="Migrations\201702240338084_Person_RefPartnerId_delete.cs" />
-    <Compile Include="Migrations\201702240338084_Person_RefPartnerId_delete.Designer.cs">
-      <DependentUpon>201702240338084_Person_RefPartnerId_delete.cs</DependentUpon>
+    <Compile Include="Migrations\201703121658472_Initial.cs" />
+    <Compile Include="Migrations\201703121658472_Initial.Designer.cs">
+      <DependentUpon>201703121658472_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702251622430_Partner_PersonId_allowNull.cs" />
-    <Compile Include="Migrations\201702251622430_Partner_PersonId_allowNull.Designer.cs">
-      <DependentUpon>201702251622430_Partner_PersonId_allowNull.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702280211110_minor_change.cs" />
-    <Compile Include="Migrations\201702280211110_minor_change.Designer.cs">
-      <DependentUpon>201702280211110_minor_change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702281048099_minor_change1.cs" />
-    <Compile Include="Migrations\201702281048099_minor_change1.Designer.cs">
-      <DependentUpon>201702281048099_minor_change1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703010229531_StaffModule_change.cs" />
-    <Compile Include="Migrations\201703010229531_StaffModule_change.Designer.cs">
-      <DependentUpon>201703010229531_StaffModule_change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703020243044_ChangeByLongRequest_UQ_20170301.cs" />
-    <Compile Include="Migrations\201703020243044_ChangeByLongRequest_UQ_20170301.Designer.cs">
-      <DependentUpon>201703020243044_ChangeByLongRequest_UQ_20170301.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703020248549_ChangeByLongRequest_UQ_201703011.cs" />
-    <Compile Include="Migrations\201703020248549_ChangeByLongRequest_UQ_201703011.Designer.cs">
-      <DependentUpon>201703020248549_ChangeByLongRequest_UQ_201703011.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703020252135_ChangeByLongRequest_UQ_201703012.cs" />
-    <Compile Include="Migrations\201703020252135_ChangeByLongRequest_UQ_201703012.Designer.cs">
-      <DependentUpon>201703020252135_ChangeByLongRequest_UQ_201703012.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703020351224_ChangeByLongRequest_UQ_201703013.cs" />
-    <Compile Include="Migrations\201703020351224_ChangeByLongRequest_UQ_201703013.Designer.cs">
-      <DependentUpon>201703020351224_ChangeByLongRequest_UQ_201703013.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703020352342_ChangeByLongRequest_UQ_20170301_1.cs" />
-    <Compile Include="Migrations\201703020352342_ChangeByLongRequest_UQ_20170301_1.Designer.cs">
-      <DependentUpon>201703020352342_ChangeByLongRequest_UQ_20170301_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703030310338_add_minorChange_Contract.cs" />
-    <Compile Include="Migrations\201703030310338_add_minorChange_Contract.Designer.cs">
-      <DependentUpon>201703030310338_add_minorChange_Contract.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703030331325_add_minorChange_Contract1.cs" />
-    <Compile Include="Migrations\201703030331325_add_minorChange_Contract1.Designer.cs">
-      <DependentUpon>201703030331325_add_minorChange_Contract1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703071416510_Document_DocumentType_remove.cs" />
-    <Compile Include="Migrations\201703071416510_Document_DocumentType_remove.Designer.cs">
-      <DependentUpon>201703071416510_Document_DocumentType_remove.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703071440580_minor_changeColumn.cs" />
-    <Compile Include="Migrations\201703071440580_minor_changeColumn.Designer.cs">
-      <DependentUpon>201703071440580_minor_changeColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703090941186_addColumn_DocumentFileAttachment.cs" />
-    <Compile Include="Migrations\201703090941186_addColumn_DocumentFileAttachment.Designer.cs">
-      <DependentUpon>201703090941186_addColumn_DocumentFileAttachment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703100015261_minor_changeColumn1.cs" />
-    <Compile Include="Migrations\201703100015261_minor_changeColumn1.Designer.cs">
-      <DependentUpon>201703100015261_minor_changeColumn1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703100247403_minor_changeColumn2.cs" />
-    <Compile Include="Migrations\201703100247403_minor_changeColumn2.Designer.cs">
-      <DependentUpon>201703100247403_minor_changeColumn2.cs</DependentUpon>
+    <Compile Include="Migrations\201703121708540_minorChange.cs" />
+    <Compile Include="Migrations\201703121708540_minorChange.Designer.cs">
+      <DependentUpon>201703121708540_minorChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,56 +118,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702240338084_Person_RefPartnerId_delete.resx">
-      <DependentUpon>201702240338084_Person_RefPartnerId_delete.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703121658472_Initial.resx">
+      <DependentUpon>201703121658472_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702251622430_Partner_PersonId_allowNull.resx">
-      <DependentUpon>201702251622430_Partner_PersonId_allowNull.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702280211110_minor_change.resx">
-      <DependentUpon>201702280211110_minor_change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702281048099_minor_change1.resx">
-      <DependentUpon>201702281048099_minor_change1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703010229531_StaffModule_change.resx">
-      <DependentUpon>201703010229531_StaffModule_change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703020243044_ChangeByLongRequest_UQ_20170301.resx">
-      <DependentUpon>201703020243044_ChangeByLongRequest_UQ_20170301.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703020248549_ChangeByLongRequest_UQ_201703011.resx">
-      <DependentUpon>201703020248549_ChangeByLongRequest_UQ_201703011.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703020252135_ChangeByLongRequest_UQ_201703012.resx">
-      <DependentUpon>201703020252135_ChangeByLongRequest_UQ_201703012.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703020351224_ChangeByLongRequest_UQ_201703013.resx">
-      <DependentUpon>201703020351224_ChangeByLongRequest_UQ_201703013.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703020352342_ChangeByLongRequest_UQ_20170301_1.resx">
-      <DependentUpon>201703020352342_ChangeByLongRequest_UQ_20170301_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703030310338_add_minorChange_Contract.resx">
-      <DependentUpon>201703030310338_add_minorChange_Contract.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703030331325_add_minorChange_Contract1.resx">
-      <DependentUpon>201703030331325_add_minorChange_Contract1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703071416510_Document_DocumentType_remove.resx">
-      <DependentUpon>201703071416510_Document_DocumentType_remove.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703071440580_minor_changeColumn.resx">
-      <DependentUpon>201703071440580_minor_changeColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703090941186_addColumn_DocumentFileAttachment.resx">
-      <DependentUpon>201703090941186_addColumn_DocumentFileAttachment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703100015261_minor_changeColumn1.resx">
-      <DependentUpon>201703100015261_minor_changeColumn1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703100247403_minor_changeColumn2.resx">
-      <DependentUpon>201703100247403_minor_changeColumn2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703121708540_minorChange.resx">
+      <DependentUpon>201703121708540_minorChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

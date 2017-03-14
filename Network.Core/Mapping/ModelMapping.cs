@@ -32,9 +32,11 @@ namespace Network.Core.Mapping
                 .ForMember(s => s.LocationPoint, m => m.MapFrom(d => 
                 GeoHelper.CreatePoint(d.LocationLatitude, d.LocationLongitude)));
             //department
-            Mapper.CreateMap<Department, DepartmentDTO>()
-            .ForMember(s => s.LocationName, m => m.MapFrom(d => d.Location.LocationName));
+            Mapper.CreateMap<Department, DepartmentDTO>()//.ReverseMap();
+            .ForMember(s => s.DepartmentGroupName, m => m.MapFrom(d => d.DepartmentGroup));
             Mapper.CreateMap<DepartmentDTO, Department>();
+           
+            //    Mapper.CreateMap<DepartmentDTO, Department>();
             //staff
             Mapper.CreateMap<Staff, StaffDTO>()
             .ForMember(s => s.DepartmentName, m => m.MapFrom(d => d.Department.DepartmentName))

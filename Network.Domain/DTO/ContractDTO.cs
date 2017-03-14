@@ -31,6 +31,7 @@ namespace Network.Domain.DTO
         public float? LocationAreaM2 { get; set; }
         //  public virtual Location Location { get; set; }
         //Tên hợp đồng 
+        
         public string ContractName { get; set; }
         public string ContractNumber { get; set; }
 

@@ -32,8 +32,9 @@ namespace Network.Domain.Entity
         //thông tin đối tác
         public virtual Partner Partner { get; set; }
         //Tên hợp đồng 
+        [MaxLength(200)]
         public string ContractName { get; set; }
-
+        [MaxLength(200)]
         public string ContractNumber { get; set; }
         //hợp đồng theo địa điểm 
         public Guid LocationId { get; set; }

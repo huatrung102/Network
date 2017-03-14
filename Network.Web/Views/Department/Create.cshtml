@@ -29,9 +29,9 @@
 
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.LocationName, htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.LabelFor(model => model.DepartmentGroup, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                <select style="width:400px!important" data-bind="options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
+                                <select style="width:400px!important" data-bind="options: $root.departmentGroup, optionsText: 'Text', optionsValue: 'Value', value: DepartmentGroup" class="col-xs-12 "></select>
                             </div>
                         </div>                                              
                     </div>

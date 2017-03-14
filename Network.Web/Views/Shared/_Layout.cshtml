@@ -48,19 +48,43 @@
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
 
         $(function () {
+            $(".navbar-language li").on("click", "a", function () {
+                event.preventDefault();
+                //alert("test");
+
+                $(this).parent().removeClass("active");
+                $(this).addClass("active");
+                selected = $(this).data('value');
+                $.ajax({
+                    method: "GET",
+                    url: '@Url.Action("Change","Language")',
+                    dataType: "text",
+                    data: { data: selected },
+                    success: function () {
+                        //  $(this).addClass("done");
+                    }
+                });
+
+            });
+
+            $("#language").change(function () {
+                var selected = this.value;
+
+
+            });
             updateCheckboxUI = function () {
                 $('input[type="checkbox"], input[type="radio"]').iCheck({
                     checkboxClass: "icheckbox_minimal-blue",
                     radioClass: "iradio_minimal-blue"
                 });
-               
+
             }
             updateSelectUI = function (root) {
                 $("select").select2({
                     dropdownParent: root
                 });
             }
-            
+
             numberWithCommas = function(x) {
                 if (typeof x == 'undefined')
                     return "";

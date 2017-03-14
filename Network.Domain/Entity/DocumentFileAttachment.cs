@@ -22,7 +22,7 @@ namespace Network.Domain.Entity
         public Guid FileAttachmentId { get; set; }
         [MaxLength(200)]
         public string FileName { get; set; }
-
+        [MaxLength(20)]
         public string FileAttachmentValidDate { get; set; }
 
         public bool FileAttachmentStatus { get; set; }

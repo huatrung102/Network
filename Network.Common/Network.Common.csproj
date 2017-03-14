@@ -84,13 +84,20 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnconstrainedMelody, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnconstrainedMelody.0.2.1\lib\UnconstrainedMelody.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binder\TrimModelBinder.cs" />
     <Compile Include="DefineAttribute\DisplayTextEnum.cs" />
+    <Compile Include="DefineAttribute\LocalizedDescriptionAttribute.cs" />
     <Compile Include="DefineAttribute\SqlDefaultDateTimeAttribute.cs" />
     <Compile Include="DefineAttribute\StringTrimAttribute.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\GeographyConverter.cs" />
+    <Compile Include="Extensions\MigrationExtensions.cs" />
     <Compile Include="Extensions\NWException.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\JsonError.cs" />
@@ -110,6 +117,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Res\Res.csproj">
+      <Project>{af4441e2-cf85-4779-8f13-1a880c6517e7}</Project>
+      <Name>Res</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

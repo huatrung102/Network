@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Department</h2>
 
 <p>
 
@@ -105,8 +105,8 @@
                 self.selectedDTO = ko.observable();
 
                 self.contractType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.ContractTypeEnum>())'));
+               // self.schedulePayment = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.SchedulePaymentEnum>())'));
                 self.schedulePayment = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.SchedulePaymentEnum>())'));
-
                 self.fileAttachment = function () {
                     return new DTO(JSON.parse(@Html.ModelToJSon(
                 new Network.Domain.DTO.ContractFileAttachmentDTO())));

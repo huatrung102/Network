@@ -26,129 +26,51 @@
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
             <li class="">
-                <a href="@Url.Action("Index", "Home")"><i class="fa fa-link"></i> <span>Home</span></a>
+                <a href="@Url.Action("Index", "Home")" class=""><i class="fa fa-flag-o"></i> <span>Home</span><i class="fa fa-angle-left pull-right"></i></a>
             </li>
             <li class="">
-                <a href="@Url.Action("Index", "Location")"><i class="fa fa-link"></i> <span>Home</span></a>
+                <a href="@Url.Action("Index", "Location")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Location</span></a>
             </li>
             <li class="">
-                <a href="@Url.Action("Index", "Home")"><i class="fa fa-link"></i> <span>Home</span></a>
+                <a href="@Url.Action("Index", "Document")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Document</span></a>
+            </li>
+            <li class="">
+                <a href="@Url.Action("Index", "Contract")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Contract</span></a>
+            </li>
+            <li class="">
+                <a href="@Url.Action("Index", "Staff")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Staff</span></a>
+            </li>
+            <li class="">
+                <a href="@Url.Action("Index", "Department")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Department</span></a>
             </li>
 
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Location</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Location")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Location")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
+            @*
+            <li class="">
+                <a href="@Url.Action("Index", "Position")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Position</span></a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Document</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Document")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Document")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
+            *@
+            <li class="">
+                <a href="@Url.Action("Index", "Partner")"><i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Partner</span></a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Contract</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Contract")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Contract")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Staff</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Staff")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Staff")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Department</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Department")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Department")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
-            </li>
-          <!-- <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>Positions</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Position")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Position")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
-            </li> -->
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Partner</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class=" ">
-                        <a href="@Url.Action("Index", "Partner")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
-                    </li>
-                    <li class=" ">
-                        <a href="@Url.Action("Create", "Partner")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
-                    </li>
-                </ul>
-            </li>
-         
+           
+            @*
+       <li class="treeview">
+           <a href="#">
+               <i class="fa fa-link"></i> <span>@Res.GlobalResource.Menu_Partner</span>
+               <span class="pull-right-container">
+                   <i class="fa fa-angle-left pull-right"></i>
+               </span>
+           </a>
+           <ul class="treeview-menu">
+               <li class=" ">
+                   <a href="@Url.Action("Index", "Partner")"><i class="fa fa-link"></i> <span>Xem danh sách</span></a>
+               </li>
+               <li class=" ">
+                   <a href="@Url.Action("Create", "Partner")"><i class="fa fa-link"></i> <span>Tạo mới</span></a>
+               </li>
+           </ul>
+       </li>
+     *@
            
         </ul>
         @* END Menu *@

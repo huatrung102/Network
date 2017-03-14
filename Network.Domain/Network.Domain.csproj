@@ -89,6 +89,7 @@
     <Compile Include="DTO\DocumentDTO.cs" />
     <Compile Include="DTO\DocumentFileAttachmentDTO.cs" />
     <Compile Include="DTO\LocationDTO.cs" />
+    <Compile Include="DTO\LocationReportDTO.cs" />
     <Compile Include="DTO\PartnerDTO.cs" />
     <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PositionDTO.cs" />

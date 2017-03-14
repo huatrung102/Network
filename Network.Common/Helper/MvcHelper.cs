@@ -1,4 +1,5 @@
 ﻿using Network.Common.Extensions;
+using Network.Common.Helper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using UnconstrainedMelody;
+
 namespace Network.Common.Helper
 {
     public static class  MvcHelper
     {
+        
         public static MvcHtmlString ModelToJSon(this HtmlHelper html, object model)
         {
+            
             if (model == null)
                 return new MvcHtmlString("'null'");
 
@@ -31,15 +36,20 @@ namespace Network.Common.Helper
         }
         public static MvcHtmlString EnumToJson<T>(this HtmlHelper helper) where T : struct, IConvertible
         {
-
+           /* old version
             var values = from T e in Enum.GetValues(typeof(T))
-                         select String.Format(@"{{""Value"": {0:d}, ""Text"": ""{1}""}}",
-                       //  e, EnumHelper.ToNameText(e.ToString().FromString()));
-                       e, e.ToString());
+                         select String.Format(@"{{""Value"": {0:d}, ""Text"": ""{1}""}}", e, e.ToString());
             return MvcHtmlString.Create("[" + String.Join(",", values.ToArray()) + "]");
+           // */
+            return MvcHtmlString.Create(EnumHelper.ToEnumerable<T>());
+        }
+       /* for test purpose
+        public static MvcHtmlString IEnumToJson<T>(this HtmlHelper helper) where T : struct, IConvertible
+        {            
+            return MvcHtmlString.Create(EnumHelper.ToEnumerable<T>());
 
         }
-
+        */
         public static string getResponse<T>(int responseCode, T data,JsonError error = null)
         {
             JsonResponse<T> response = new JsonResponse<T>(responseCode, error, data);

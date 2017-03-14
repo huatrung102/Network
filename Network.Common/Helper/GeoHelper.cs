@@ -17,7 +17,7 @@ namespace Network.Common.Helper
         /// <returns></returns>
         public static DbGeography CreatePoint(double latitude, double longitude)
         {
-            var text = string.Format("Point({0} {1})", longitude, latitude);
+            var text = string.Format("Point({0} {1})", longitude, latitude).Replace(',','.');
             // 4326 is most common coordinate system used by GPS/Maps
             return DbGeography.PointFromText(text, 4326);
         }

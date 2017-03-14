@@ -11,108 +11,104 @@
             </div>
             <div class="modal-body">
 
-
-                @using (Html.BeginForm())
-            {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal">
-                        <h4>Create</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationName, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationName" />
-                            </div>
+                
+                <div class="form-horizontal" data-bind="with:DTO">
+                    <h4>Create</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationName" />
                         </div>
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationCode, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationCode" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationParentCode, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationParentCode" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationAddress, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-
-                                <textarea class="form-control" data-bind="value: LocationAddress"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationPhone, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationPhone" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationFax, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationFax" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationAreaM2, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationAreaM2" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationLatitude, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationLatitude" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationLongitude, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <input class="form-control" data-bind="value: LocationLongitude" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LocationDescription, htmlAttributes: new { @class = "control-label col-md-3" })
-                            <div class="col-md-9">
-                                <textarea class="form-control" data-bind="value: LocationDescription"></textarea>
-                            </div>
-                        </div>
-
-
                     </div>
-                }
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationCode" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationParentCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationParentCode" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationAddress, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+
+                            <textarea class="form-control" data-bind="value: LocationAddress"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationPhone, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationPhone" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationFax, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationFax" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationAreaM2, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationAreaM2" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationLatitude, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationLatitude" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationLongitude, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input class="form-control" data-bind="value: LocationLongitude" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LocationDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <textarea class="form-control" data-bind="value: LocationDescription"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
 
 
             </div>
 
-       </div>
+        </div>
         <div class="col-md-7">
-            <!-- ko if:selectedLocation() -->
-            <div class="map" style="min-height:100%;margin-top:20px" data-bind="map: selectedLocation"></div>
-            <!-- /ko -->
-        </div>
 
-         <div class="modal-footer">
-                <button data-bind="click: create" class="btn btn-primary">Save</button>
-                <button data-dismiss="modal" class="btn btn-default" data-bind1="click: close" type="button">Close</button>
-
-            </div>
+            <div id="mapSingle" class="map" style="min-height:100%;margin-top:20px" data-bind="map: mapSingle,isEdit: false,latitude: DTO().LocationLatitude,longitude: DTO().LocationLongitude"></div>
 
         </div>
+
+        <div class="modal-footer">
+            <button data-bind="visible: !isEdit(),click: create" class="btn btn-primary">Save</button>
+            <!-- <button data-bind="visible: isEdit(),click: edit" class="btn btn-primary">Save</button>-->
+            <button data-dismiss="modal" class="btn btn-default" data-bind1="click: close" type="button">Close</button>
+
+        </div>
+
+    </div>
 
 </div>
 

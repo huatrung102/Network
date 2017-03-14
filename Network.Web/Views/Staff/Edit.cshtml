@@ -1,89 +1,89 @@
 ﻿@model Network.Domain.DTO.StaffDTO
-div class="modal-dialog">
+<div class="modal-dialog">
 
-<!-- Modal content-->
-<div class="modal-content">
-
-
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3 class="modal-title">Staff</h3>
-    </div>
-    <div class="modal-body">
+    <!-- Modal content-->
+    <div class="modal-content">
 
 
-        <div class="form-horizontal" data-bind="with: selectedDTO">
-            <h4>Edit</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.StaffName, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <input class="form-control" data-bind="value: StaffName" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.StaffPhone, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <input class="form-control" data-bind="value: StaffPhone" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.StaffEmail, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <input class="form-control" data-bind="value: StaffEmail" />
-                </div>
-            </div>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">Staff</h3>
+        </div>
+        <div class="modal-body">
 
 
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <select style="width:400px!important"data-bind="options: $root.departments, optionsText: 'DepartmentName', optionsValue: 'DepartmentId', value: DepartmentId" class="col-xs-12 "></select>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.PositionId, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <select style="width:400px!important"data-bind="options: $root.positions, optionsText: 'PositionName', optionsValue: 'PositionId', value: PositionId, event: {change: $root.checkPositionIsLeader }" class="col-xs-12 "></select>
-                </div>
-            </div>
-
-
-            <div class="form-group" data-bind="visible:!($root.isLeader())">
-                @Html.LabelFor(model => model.StaffCount, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <input class="form-control" data-bind="value: StaffCount" />
-                </div>
-            </div>
-            <div class="form-group" data-bind="visible:!($root.isLeader())">
-                @Html.LabelFor(model => model.StaffIsHeadOffice, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    <div class="checkbox">
-                        <input type="checkbox" class="" data-bind="checked: StaffIsHeadOffice" />
+            <div class="form-horizontal" data-bind="with: selectedDTO">
+                <h4>Edit</h4>
+                <hr />
+                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PositionId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select style="width:400px!important" data-bind="options: $root.positions, optionsText: 'PositionName', optionsValue: 'PositionId', value: PositionId, event: {change: $root.checkPositionIsLeader }" class="col-xs-12 "></select>
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StaffName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <input class="form-control" data-bind="value: StaffName" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StaffPhone, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <input class="form-control" data-bind="value: StaffPhone" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StaffEmail, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <input class="form-control" data-bind="value: StaffEmail" />
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select style="width:400px!important" data-bind="options: $root.departments, optionsText: 'DepartmentName', optionsValue: 'DepartmentId', value: DepartmentId" class="col-xs-12 "></select>
+                    </div>
+                </div>
+                <div class="form-group" data-bind="visible:($root.isLeader())">
+                    @Html.LabelFor(model => model.StaffIsHeadOffice, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            <input type="checkbox" class="" data-bind="checked: StaffIsHeadOffice" />
+                        </div>
+                    </div>
+                </div>
+
+               
+
+
+                <div class="form-group" data-bind="visible:!($root.isLeader())">
+                    @Html.LabelFor(model => model.StaffCount, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <input class="form-control" data-bind="value: StaffCount" />
+                    </div>
+                </div>
+               
+
             </div>
+
 
         </div>
 
 
+        <div class="modal-footer">
+            <button data-bind="click: edit" class="btn btn-primary">Save</button>
+            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+
+        </div>
+
     </div>
-
-
-    <div class="modal-footer">
-        <button data-bind="click: edit" class="btn btn-primary">Save</button>
-        <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-
-    </div>
-
 </div>
-
 
 

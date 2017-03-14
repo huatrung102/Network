@@ -10,8 +10,7 @@
 
 <p>
 
-    <a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-       data-target="#myModalCreate" data-bind="click: function(){} ">Create New</a>
+    <a href="#" data-bind="click: createView ">Create New</a>
 
 </p>
 <table class="table">
@@ -22,24 +21,23 @@
         </th>
       
         <th>
-            @Html.DisplayNameFor(model => model.LocationName)
+            @Html.DisplayNameFor(model => model.DepartmentGroupName)
         </th>
         <th></th>
     </tr>
     <tbody data-bind='foreach: departments'>
-        <tr>
+        <tr data-bind="visible: DepartmentId()!= null && DepartmentId()!=='00000000-0000-0000-0000-000000000000'">
             <td>
                 <span class="" data-bind="text: DepartmentName">1</span>
             </td>
             <td>
-                <span class="" data-bind="text: LocationName">1</span>
+                <span class="" data-bind="text: DepartmentGroupName">1</span>
             </td>
          
 
             <td>
-                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                        data-target="#myModalEdit" data-bind="visible: DepartmentId()!= null && DepartmentId()!=='00000000-0000-0000-0000-000000000000'
-                        ,click: $parent.editView" name="" value=""
+                <button 
+                        data-bind="click: $parent.editView" name="" value=""
                         class="btn btn-xs btn-success">
                     Edit
                 </button>
@@ -64,10 +62,9 @@
     <section class="scripts">
         <script type="text/javascript">
 
-            var DTO = function (data) {
-                var self = this;
-                ko.mapping.fromJS(data, null, self);
-                return self;
+            var DTO = function (data) {                
+                return ko.mapping.fromJS(data, null, this);
+               
             }
 
             var MainViewModel = function (json) {
@@ -77,7 +74,7 @@
               
               //  self.defaultDTO = new DTO(json);                
                 self.departments = ko.observableArray();
-                self.locations = ko.observableArray();
+                self.departmentGroup = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.DepartmentGroupEnum>())'));
                 self.selectedDTO = ko.observable();
                 
 
@@ -98,6 +95,7 @@
 
                     });
                 }
+                
                 self.create = function () {
                     self.DTO.DepartmentId(UUID());
 
@@ -127,28 +125,24 @@
                     });;
 
                 };
-                
-            
-                self.loadLocation = function () {
-                    var result = [];
-                    $.ajax({
-                        method: "GET",
-                        url: '@Url.Action("getAllEntity", "Location")',
-                        async: false,
-                        contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        // console.log(data);
-                        var mappedObj = $.map(data, function (item) { return new DTO(item) });
-                        if (mappedObj.length === 0) self.locations.push(new DTO(json));
-                        else self.locations(mappedObj);
-                        
-
-                    });
-                };
-               
-                
+                            
+              
+                self.createView = function () {
+                    $('#myModalCreate').modal(
+                           {
+                               backdrop: 'static',
+                               keyboard: false  // to prevent closing with Esc button (if you want this too)
+                           });
+                    updateSelectUI($('#myModalCreate'));
+                }
                 self.editView = function (data) {
                     self.selectedDTO(data);
+                    $('#myModalEdit').modal(
+                          {
+                              backdrop: 'static',
+                              keyboard: false  // to prevent closing with Esc button (if you want this too)
+                          });
+                    updateSelectUI($('#myModalEdit'));
                 }
 
                 self.edit = function (data) {
@@ -179,16 +173,14 @@
 
                     });;
                 };
-                self.getDetailView = function (id) {
-
-                };
+                
                 self.viewDetail = function (data) {
                     console.log('data:' + data)
                     self.getDetailView({ id: data.DepartmentId() });
                 };
 
                 self.loadTable();
-                self.loadLocation();
+              
             }
 
             $(function () {

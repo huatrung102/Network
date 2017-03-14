@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Network.Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,9 @@ namespace Network.Domain.DTO
        
         public string DepartmentName { get; set; }
 
-        public virtual Guid LocationId { get; set; }
-       
-        public string LocationName { get; set; }
+      //  public virtual Guid LocationId { get; set; }
+        public EType.DepartmentGroupEnum DepartmentGroup { get; set; }
+        public string DepartmentGroupName { get; set; }
+        //   public string LocationName { get; set; }
     }
 }

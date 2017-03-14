@@ -24,11 +24,11 @@ namespace Network.Web.Controllers
             _IService = new LocationService(UnitOfWork);
             
         }
-        public JsonResult getAllEntity()
+        public string getAllEntity()
         {
             var dto = _IService.GetAllToView().Select(p => _IService.getMapperDTO<LocationDTO>(p)).ToList();
-            
-            return Json(dto, JsonRequestBehavior.AllowGet);
+            var json = MvcHelper.SerializeObject(dto, Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            return json;
         }
 
         
@@ -76,7 +76,12 @@ namespace Network.Web.Controllers
                 return JsonError(ex);
             }
         }
+        [HttpPost]
+        public string LocationReport(string id)
+        {
 
+            return JsonOk();
+        }
         public ActionResult Delete(string id)
         {
             try

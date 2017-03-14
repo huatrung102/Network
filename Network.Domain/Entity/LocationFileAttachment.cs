@@ -14,7 +14,7 @@ namespace Network.Domain.Entity
         public Guid LocationId { get; set; }
         [Key, ForeignKey("FileAttachment"), Column(Order = 0)]
         public Guid FileAttachmentId { get; set; }
-        public string FileAttachmentGroup { get; set; }
+       
 
         public virtual Location Location { get; set; }
         public virtual FileAttachment FileAttachment { get; set; }

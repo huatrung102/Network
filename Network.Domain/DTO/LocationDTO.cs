@@ -12,10 +12,16 @@ namespace Network.Domain.DTO
 {
     public class LocationDTO
     {
-       
+       public LocationDTO()
+        {
+            this.LocationId = Guid.NewGuid();
+            this.LocationFileAttachments = new HashSet<LocationFileAttachment>();
+            //use for event click choose location to change on map
+            this.selected = false;
+        }
         public string LocationName { get; set; }
         
-        public Guid? LocationId { get; set; }        
+        public Guid LocationId { get; set; }        
         public string LocationCode { get; set; }
         
         public string LocationParentCode { get; set; }
@@ -33,32 +39,12 @@ namespace Network.Domain.DTO
         public DbGeography LocationPoint { get; set; }
         public double LocationLatitude { get; set; }
         public double LocationLongitude { get; set; }
-        
-        /*
-        private double _LocationLatitude  ;
-        public double? LocationLatitude {
-            get {
-                if (LocationPoint == null) return 10.7821116F;
-                else return _LocationLatitude;
-            }
-            set {
-                _LocationLatitude = value == null ? default(double) : (double)value;
-            }
-        }
-        private double _LocationLongitude;
-        public double? LocationLongitude {
-            get
-            {
-                if (LocationPoint == null) return 106.7037574F;
-                else return _LocationLongitude;
-            }
-            set
-            {
-                _LocationLongitude = value == null ? default(double) : (double)value;
-            }
-        }
-       */
+
+        public float? LocationFrontSpace { get; set; }
+
         public string LocationDescription { get; set; }
+
+        public bool selected { get; set; }
         //hình hiện trạng hiện tại của địa điểm
         public virtual ICollection<LocationFileAttachment> LocationFileAttachments { get; set; }
     }

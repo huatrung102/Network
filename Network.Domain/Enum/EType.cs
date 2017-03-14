@@ -13,9 +13,11 @@ namespace Network.Domain.Enum
     {
        
         
-        public enum PositionGroupEnum
+        public enum DepartmentGroupEnum
         {
+            [LocalizedDescription("DepartmentGroupEnum_BANLE", typeof(GlobalResource))]
             BANLE = 0,
+            [LocalizedDescription("DepartmentGroupEnum_TACNGHIEP", typeof(GlobalResource))]
             TACNGHIEP = 1
         }
         public enum MoneyEnum
@@ -83,9 +85,11 @@ namespace Network.Domain.Enum
         }
         public enum ContractTypeEnum
         {
-           HopDong = 1,
-           Phuluc ,
-
+            [LocalizedDescription("ContractTypeEnum_HopDong", typeof(GlobalResource))]
+            HopDong = 1,
+            [LocalizedDescription("ContractTypeEnum_Phuluc", typeof(GlobalResource))]
+            Phuluc ,
+            
         }
 
         public enum DocumentPartnerHpTypeEnum
@@ -108,10 +112,14 @@ namespace Network.Domain.Enum
             Deleted
         }
         public enum SchedulePaymentEnum
-        {            
+        {
+            [LocalizedDescription("SchedulePaymentEnum_MONTHLY", typeof(GlobalResource))]
             Monthly = 1,
+            [LocalizedDescription("SchedulePaymentEnum_QUARTERLY", typeof(GlobalResource))]
             Quarterly = 3,
+            [LocalizedDescription("SchedulePaymentEnum_SEMIYEARLY", typeof(GlobalResource))]
             SemiYearly = 6,
+            [LocalizedDescription("SchedulePaymentEnum_YEARLY", typeof(GlobalResource))]
             Yearly = 12
         }
         

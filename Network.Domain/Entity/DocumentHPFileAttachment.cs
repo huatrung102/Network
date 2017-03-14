@@ -14,7 +14,7 @@ namespace Network.Domain.Entity
         public Guid DocumentHPId { get; set; }
         [Key, ForeignKey("FileAttachment"), Column(Order = 0)]
         public Guid FileAttachmentId { get; set; }
-        public string FileAttachmentGroup { get; set; }
+        
         [MaxLength(200)]
         public string FileAttachmentName { get; set; }
 
