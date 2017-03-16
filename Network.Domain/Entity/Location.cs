@@ -19,7 +19,7 @@ namespace Network.Domain.Entity
             
             this.LocationFileAttachments = new HashSet<LocationFileAttachment>();
             this.Contracts = new HashSet<Contract>();
-         
+            this.Documents = new HashSet<Document>();
             this.Staffs = new HashSet<Staff>();
 
         }
@@ -58,7 +58,7 @@ namespace Network.Domain.Entity
 
         public virtual ICollection<Contract> Contracts { get; set; }
 
-       
+        public virtual ICollection<Document> Documents { get; set; }
         public virtual ICollection<Staff> Staffs { get; set; }
     }
 }

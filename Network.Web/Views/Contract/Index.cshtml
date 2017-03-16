@@ -90,14 +90,14 @@
     <section class="scripts">
         <script type="text/javascript">
 
-            var DTO = function (data) {
-                ko.mapping.fromJS(data, null, this);
+            var dto = function (data) {
+               return ko.mapping.fromJS(data, null, this);
             }
 
             var MainViewModel = function (json) {
                 var self = this;
                 ko.mapping.fromJS(json, null, this);
-                self.DTO = new DTO(json);
+                self.DTO = new dto(json);
 
                 self.contracts = ko.observableArray();
                 self.locations = ko.observableArray();
@@ -108,7 +108,7 @@
                // self.schedulePayment = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.SchedulePaymentEnum>())'));
                 self.schedulePayment = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.SchedulePaymentEnum>())'));
                 self.fileAttachment = function () {
-                    return new DTO(JSON.parse(@Html.ModelToJSon(
+                    return new dto(JSON.parse(@Html.ModelToJSon(
                 new Network.Domain.DTO.ContractFileAttachmentDTO())));
                 }
 
@@ -116,7 +116,7 @@
                     self.DTO.ContractFileAttachments.remove(element);
                 }
 
-                
+
                self.loadTable = function () {
                     self.contracts.removeAll();
 
@@ -130,15 +130,15 @@
                         if (data.length > 0)
                         {
                             var mappedObj = $.map(data, function (item) {
-                                return new DTO(item);
+                                return new dto(item);
                             });
                             if (mappedObj.length === 0) {
-                                var p = new DTO(json);
+                                var p = new dto(json);
                                 //  p.DocumentFileAttachments = ko.observableArray();
                                 self.contracts.push(p);
                             } else self.contracts(mappedObj);
                         }
-                        
+
                     });
                 }
                 self.createView = function () {
@@ -157,11 +157,11 @@
                     //generate GUID for FileAttachment
                     dto.FileAttachmentId(UUID());
                     self.DTO.ContractFileAttachments.push(dto);
-                    updateSelectUI($("#myModalCreate"));
-                    updateCheckboxUI();
+                   // updateSelectUI($("#myModalCreate"));
+                   // updateCheckboxUI();
                 }
                 self.create = function () {
-                    
+
                     var data = new FormData();
                     files = $("#myModalCreate .fileChooser");
                     $.each(files, function (obj, v) {
@@ -173,15 +173,15 @@
                     var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
                     var messageCreateOK = String.format('@Res.GlobalResource.Action_Create_Success', controller);
                     var paramsObj = ko.mapping.toJSON(self.DTO);
-                    
+
                     data.append("dto", paramsObj);
                     $.ajax({
                             method: "POST",
                             url: '@Url.Action("Create")',
-                            timeout: 15000,                            
+                            timeout: 15000,
                             contentType: false,
                             processData: false,
-                            async: false,                            
+                            async: false,
                             data: data
                         }).fail(function () {
                             toastr.error("Action failed !.");
@@ -207,33 +207,40 @@
                     }
                 }
 
-                self.loadLocation = function () {
-                    self.locations.removeAll();
+                 self.loadLocation = function () {
+                   self.locations.removeAll();
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("getAllEntity","Location")',
-                        async: true,
+                        async: false,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        $.each(data, function (idx, item) {
-                            self.locations.push(item);
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return  new dto(item);
+                            });
+                            self.locations(mappedObj);
+                        }
 
-                        })
                     });
                 };
 
                 self.loadPartner = function () {
-                    self.partners.removeAll();
+                     self.partners.removeAll();
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("getAllEntity","Partner")',
                         async: true,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        $.each(data, function (idx, item) {
-                            self.partners.push(item);
-
-                        })
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return new dto(item);
+                            });
+                            self.partners(mappedObj);
+                        }
                     });
                 };
 

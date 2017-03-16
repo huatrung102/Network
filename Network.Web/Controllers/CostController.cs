@@ -43,7 +43,7 @@ namespace Network.Web.Controllers
             try
             {
 
-                Cost c = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Cost c = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 return View(c);
             }
             catch (Exception)
@@ -73,7 +73,7 @@ namespace Network.Web.Controllers
             try
             {
                 //delete person but set isDeleted = true
-                Cost c = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Cost c = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 c.IsDeleted = true;
                 _IService.Update(c);
 

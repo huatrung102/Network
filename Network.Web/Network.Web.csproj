@@ -518,6 +518,7 @@
     <Compile Include="Controllers\CostController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\FileAttachmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -669,6 +670,8 @@
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\Create.cshtml" />
     <Content Include="Views\Staff\Edit.cshtml" />
+    <Content Include="Views\Location\LocationReport.cshtml" />
+    <Content Include="Views\FileAttachment\Download.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -683,6 +686,7 @@
     <Folder Include="lib\AdminLTE\dist\css\alt\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Cost\" />
+    <Folder Include="Views\File\" />
     <Folder Include="Views\Language\" />
     <Folder Include="Views\Position\" />
   </ItemGroup>

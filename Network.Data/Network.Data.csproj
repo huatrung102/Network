@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201703121708540_minorChange.Designer.cs">
       <DependentUpon>201703121708540_minorChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703141854568_staff_change.cs" />
+    <Compile Include="Migrations\201703141854568_staff_change.Designer.cs">
+      <DependentUpon>201703141854568_staff_change.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Impl\ContractRepository.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703121708540_minorChange.resx">
       <DependentUpon>201703121708540_minorChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703141854568_staff_change.resx">
+      <DependentUpon>201703141854568_staff_change.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

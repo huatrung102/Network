@@ -48,6 +48,20 @@
         $.fn.modal.Constructor.prototype.enforceFocus = function () { };
 
         $(function () {
+
+            LookupEnum = function (options, value) {
+                var el = $.Enumerable.From(options).SingleOrDefault(null, function (x) {
+                    return x.Value === value;
+                });
+                return el == null ? '' : el.Text;
+            }
+            numberWithCommas = function (x) {
+                if (typeof x == 'undefined')
+                    return "";
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+
             $(".navbar-language li").on("click", "a", function () {
                 event.preventDefault();
                 //alert("test");

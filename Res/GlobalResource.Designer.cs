@@ -403,6 +403,24 @@ namespace Res {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personal.
+        /// </summary>
+        public static string PartnerTypeEnum_CANHAN {
+            get {
+                return ResourceManager.GetString("PartnerTypeEnum_CANHAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string PartnerTypeEnum_CONGTY {
+            get {
+                return ResourceManager.GetString("PartnerTypeEnum_CONGTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Monthly.
         /// </summary>
         public static string SchedulePaymentEnum_MONTHLY {

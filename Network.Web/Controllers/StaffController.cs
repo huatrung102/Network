@@ -23,12 +23,12 @@ namespace Network.Web.Controllers
             _IService = new StaffService(UnitOfWork);
             _IPositionService = new PositionService(UnitOfWork);
         }
-        public JsonResult getAllEntity()
+        public string getAllEntity()
         {
             var dto = _IService.GetAllToView().Select(p => _IService.getMapperDTO<StaffDTO>(p));
             dto.Where(p => p.StaffIsHeadOffice).ToList().ForEach(p => p.StaffExistHeadOffice = true);
-
-            return Json(dto, JsonRequestBehavior.AllowGet);
+            var json = MvcHelper.SerializeObject(dto, Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            return json;
         }
         public ActionResult Create()
         {
@@ -103,7 +103,7 @@ namespace Network.Web.Controllers
         {
             try
             {
-                Staff l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Staff l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 l.IsDeleted = true;
                 _IService.Update(l);
 

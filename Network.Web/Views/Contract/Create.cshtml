@@ -20,7 +20,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            <select style="width:295px!important" data-bind="options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
+                            <select style="width:295px!important" data-bind="select2: 'myModalCreate',options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.PartnerId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            <select style="width:295px!important" data-bind="options: $root.partners, optionsText: 'PartnerName', optionsValue: 'PartnerId', value: PartnerId" class="col-xs-12 "></select>
+                            <select style="width:295px!important" data-bind="select2: 'myModalCreate',options: $root.partners, optionsText: 'PartnerName', optionsValue: 'PartnerId', value: PartnerId" class="col-xs-12 "></select>
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                         @Html.LabelFor(model => model.ContractIsTax, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
                             <div class="checkbox">
-                                <input type="checkbox" class="" data-bind="checked: ContractIsTax" /> VAT
+                                <input type="checkbox" class="" data-bind="iCheck: ContractIsTax" /> VAT
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                         @Html.LabelFor(model => model.ContractFirstPayDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
                             
-                            <input id="datemask" class="form-control"  data-bind="datepicker: ContractFirstPayDate, datepickerOptions: { 'dateFormat': 'dd/mm/yyyy' }" />
+                            <input maxlength="10"  class="form-control"  data-bind="datepicker: ContractFirstPayDate, datepickerOptions: { 'dateFormat': 'dd/mm/yyyy' }" />
                             <!--                                
                             <input class="form-control datepicker" data-bind="value: ContractFirstPayDate()? ContractFirstPayDate(): ''" />
                             <input data-bind="datepicker: ContractFirstPayDate , datepickerOptions: { minDate: new Date() }" />
@@ -90,21 +90,21 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ContractSignedDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            <input  id="datemask" class="form-control" data-bind="datepicker: ContractSignedDate" />
+                            <input  maxlength="10"  class="form-control" data-bind="datepicker: ContractSignedDate" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ContractValidDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            <input  id="datemask" class="form-control " data-bind="datepicker: ContractValidDate" />
+                            <input  maxlength="10"  class="form-control " data-bind="datepicker: ContractValidDate" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ContractInvalidDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            <input id="datemask" class="form-control " data-bind="datepicker: ContractInvalidDate" />
+                            <input maxlength="10"  class="form-control " data-bind="datepicker: ContractInvalidDate" />
                         </div>
                     </div>
 
@@ -112,7 +112,7 @@
                         @Html.LabelFor(model => model.ContractSchedulePayment, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
 
-                            <select style="width:295px!important" data-bind="options: $root.schedulePayment, optionsText: 'Text', optionsValue: 'Value', value: ContractSchedulePayment" class="col-xs-12 "></select>
+                            <select style="width:295px!important" data-bind="select2: 'myModalCreate',options: $root.schedulePayment, optionsText: 'Text', optionsValue: 'Value', value: ContractSchedulePayment" class="col-xs-12 "></select>
 
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <label>
-                                        <input type="checkbox" class="" data-bind1="checked: FileAttachmentStatus" />Active
+                                        <input type="checkbox" class="" data-bind1="iCheck: FileAttachmentStatus" />Active
                                     </label>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="col-md-3">
 
-                                    <input type="checkbox" class="" data-bind="checked: FileAttachmentStatus" />
+                                    <input type="checkbox" class="" data-bind="iCheck: FileAttachmentStatus" />
 
                                 </div>
                                 <div class="col-md-3">
@@ -160,10 +160,10 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-7">
-                                    <select style="width:295px!important" data-bind="options: $root.contractType, optionsText: 'Text', optionsValue: 'Value', value: ContractType" class="col-xs-12 "></select>
+                                    <select style="width:295px!important" data-bind="select2: 'myModalCreate',options: $root.contractType, optionsText: 'Text', optionsValue: 'Value', value: ContractType" class="col-xs-12 "></select>
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" id="#datemask" class="datepicker form-control" data-bind="value: FileAttachmentValidDate" />
+                                    <input type="text" maxlength="10"  class="datepicker form-control" data-bind="datepicker: FileAttachmentValidDate" />
                                 </div>
                             </div>
                         </div>

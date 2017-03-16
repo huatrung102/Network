@@ -157,7 +157,7 @@ namespace Network.Web.Controllers
         {
             try
             {
-                Contract c = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Contract c = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 c.IsDeleted = true;
                 _IService.Update(c);
 

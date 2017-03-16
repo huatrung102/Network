@@ -87,12 +87,7 @@
 }
 
 
-<div class="col-md-5">
 
-</div>
-<div class="col-md-7">
-
-</div>
 <div class="col-md-5">
     <h2>Index</h2>
 
@@ -100,6 +95,8 @@
 
         <a href="javascript:;" data-backdrop="static" data-keyboard="false" data-toggle="modal"
            data-target="#myModalCreate" data-bind="click: function(){createView();} ">Create New</a>
+
+        <a href="javascript:;" data-bind="click: report ">report</a>
 
     </p>
     <table class="table">
@@ -131,7 +128,7 @@
 
                 <td>
                     <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
-           data-target="#myModalEdit" data-bind="click: $parent.editView" name="" value=""
+                            data-target="#myModalEdit" data-bind="click: $parent.editView" name="" value=""
                             class="btn btn-xs btn-success">
                         Edit
                     </button>
@@ -169,10 +166,10 @@
     </div>
 </div>
 <div class="col-md-12">
-   
+
 </div>
 <div class="col-md-12">
-
+    
 </div>
 
 
@@ -183,6 +180,7 @@
 
             var modelLocation;
             var modelSelected;
+            var locationVM;
             var dto = function (data) {
                 var self = this;
                 return ko.mapping.fromJS(data, null, self);
@@ -192,19 +190,33 @@
                 self.parent = ko.mapping.fromJS(json, null, this);
                 self.DTO = ko.observable();
                 self.selectedDTO = ko.observable();
+                self.reportDTO = ko.observable();
+                self.FileDTO = new dto(JSON.parse(@Html.ModelToJSon(
+                new Network.Domain.DTO.FileAttachmentDTO())));
+
+                self.documentType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.DocumentTypeEnum>())'));
+                self.contractType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.ContractTypeEnum>())'));
+                self.departmentGroup = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.DepartmentGroupEnum>())'));
 
                 self.locations = ko.observableArray();
                 self.isEdit = ko.observable(false);
-                
+
+
+
                 self.selectedRow = {};
                 self.oldselectedDTO = ko.observable();
-
+                self.LookupEnum = function (options, value) {
+                    return LookupEnum(options, value);
+                };
+                self.numberWithCommas = function(x){
+                    return numberWithCommas(x);
+                }
                 self.editView = function (data, event) {
-                   
+
                     self.isEdit(true);
-                 //   event.preventDefault();
-                   // event.stopPropagation();
-                 //   data._mapMarkerSingle = data._mapMarker;                   
+                    //   event.preventDefault();
+                    // event.stopPropagation();
+                    //   data._mapMarkerSingle = data._mapMarker;
                     self.selectedDTO(data);
                     modelSelected = self.selectedDTO;
                     //   self.DTO(data);
@@ -216,23 +228,90 @@
 
                     });
                 };
+                self.viewFile = function (id, name) {
 
-                self.select = function (data,event) {
+                    //  self.FileDTO.FileName(name);
+                    // self.FileDTO.FileAttachmentId(id);
+                    window.location = '/FileAttachment/Download?fileGuid=' + id
+                          + '&filename=' + name;
+
+                    @*var paramsObj = { dto: ko.mapping.toJSON(self.FileDTO) }
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("DownloadDocument", "FileAttachment")',
+                        timeout: 7000,
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        data: JSON.stringify(paramsObj)
+                    }).fail(function () {
+                        toastr.error("Action failed !.");
+                    }).success(function (data) {
+                        /*
+                        $("#DisplayPDF").html(
+                            $('<iframe>', {
+                                src: this.href,
+                                width: '600px',
+                                height: "800px"
+                            })
+                        );*/
+                    });*@
+                }
+
+                self.report = function () {
+                    if (self.selectedRow.LocationId !== undefined) {
+                        var locationId = self.selectedRow.LocationId();
+                        var paramsObj = { data: locationId };
+                        $.ajax({
+                            method: "POST",
+                            url: '@Url.Action("getLocationReportPatrialView")',
+                            timeout: 15000,
+                            contentType: "application/json; charset=utf-8",
+                            async: false,
+                            data: JSON.stringify(paramsObj)
+                        }).success(function (datas) {
+                            var data = JSON.parse(datas);
+                            if (data != undefined) {
+                                self.reportDTO(ko.mapping.fromJS(data));
+                                $('#myModalReport').modal(
+                                {
+                                    backdrop: 'static',
+                                    keyboard: false  // to prevent closing with Esc button (if you want this too)
+                                });
+
+
+                                /*
+                                self.departmentsSorted = ko.computed(function () {
+                                    return self.reportDTO().Departments().sort(function (left, right) {
+                                        return left.DepartmentName() == right.DepartmentName() ?
+                                             0 :(left.DepartmentName() < right.DepartmentName() ? -1 : 1);
+                                    });
+                                });
+                                */
+                            } else {
+                                toastr.error("No data report for location !.");
+                            }
+                        });
+                    } else {
+                        toastr.error("Not select location yet !.");
+                    }
+
+                }
+                self.select = function (data, event) {
                     if (self.selectedRow.selected !== undefined) {
                         self.oldselectedDTO = self.selectedRow;
                         self.oldselectedDTO.selected(false);
                     }
                     self.selectedRow = data;
                     data.selected(true);
-                  //  data._mapMarkerSingle = data._mapMarker;
-                  
-                   // self.selectedDTO(data);
+                    //  data._mapMarkerSingle = data._mapMarker;
+
+                    // self.selectedDTO(data);
 
                 };
 
-                
+
                 self.loadTable = function () {
-                    var result = [];
+                    self.locations.removeAll();
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("getAllEntity")',
@@ -242,7 +321,7 @@
                         var data = JSON.parse(datas);
                         if (data.length > 0) {
                             var mappedObj = $.map(data, function (item) {
-                                return  new dto(item);
+                                return new dto(item);
                             });
                             if (mappedObj.length === 0) {
                                 var p = new dto(json);
@@ -258,7 +337,7 @@
 
                 }
                 self.createView = function () {
-                   // self.DTO(new dto(json));
+                    // self.DTO(new dto(json));
                 }
                 self.create = function () {
                     var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
@@ -285,59 +364,59 @@
                             //   map.clearMarkers();
                             //   window.location.href='@(Url.Action("Index", "Location"))';
                             @*{ Response.Redirect("~/Location/");}*@
-                        } else {
-                            console.log('error:' + data);
-                        }
-
-                    });;
-
-
+                } else {
+                    console.log('error:' + data);
                 }
-                self.edit = function () {
-                    var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
 
-                    var messageCreateOK = String.format('@Res.GlobalResource.Action_Create_Success', controller);
-                    var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
-                    $.ajax({
-                        method: "POST",
-                        url: '@Url.Action("Edit")',
-                        timeout: 7000,
-                        contentType: "application/json; charset=utf-8",
-                        async: false,
-                        data: JSON.stringify(paramsObj)
-                    }).fail(function () {
-                        toastr.error("Action failed !.");
+            });;
 
-                    }).success(function (data) {
-                        data = JSON.parse(data);
-                        if (data.ResponseCode == 1) {
-                            toastr.success(messageCreateOK);
-                            $('#myModalEdit').modal('hide')
-                            self.loadTable();
-                            //   map.clearMarkers();
-                            window.location.href = '@(Url.Action("Index", "Location"))';
-                            @*{ Response.Redirect("~/Location/");}*@
-                        } else {
-                            console.log('error:' + data);
-                        }
 
-                    });;
-                }
-                self.loadTable();
-                createMap();
-                createMapSingle();
-                createMapEdit();
-                //khởi tạo DTO for create new
-                self.DTO(new dto(json));
-                //de khoi tao _mapMarkerSingle
+            }
+            self.edit = function () {
+                var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
+
+                var messageCreateOK = String.format('@Res.GlobalResource.Action_Create_Success', controller);
+                var paramsObj = { dto: ko.toJSON(self.selectedDTO) }
+                $.ajax({
+                    method: "POST",
+                    url: '@Url.Action("Edit")',
+                    timeout: 7000,
+                    contentType: "application/json; charset=utf-8",
+                    async: false,
+                    data: JSON.stringify(paramsObj)
+                }).fail(function () {
+                    toastr.error("Action failed !.");
+
+                }).success(function (data) {
+                    data = JSON.parse(data);
+                    if (data.ResponseCode == 1) {
+                        toastr.success(messageCreateOK);
+                        $('#myModalEdit').modal('hide')
+                        self.loadTable();
+                        //   map.clearMarkers();
+                        window.location.href = '@(Url.Action("Index", "Location"))';
+                        @*{ Response.Redirect("~/Location/");}*@
+                    } else {
+                        console.log('error:' + data);
+                    }
+
+                });;
+            }
+            self.loadTable();
+            createMap();
+            createMapSingle();
+            createMapEdit();
+            //khởi tạo DTO for create new
+            self.DTO(new dto(json));
+            //de khoi tao _mapMarkerSingle
             //    self.selectedDTO = ko.mapping.fromJS(self.DTO);
-                modelLocation = self.DTO;
-                
-              //  self.selectedDTO(new dto(json));
-                //modelSelected = self.selectedDTO;
+            modelLocation = self.DTO;
 
-               
-                
+            //  self.selectedDTO(new dto(json));
+            //modelSelected = self.selectedDTO;
+
+            locationVM = self;
+
             }
 
             function createMapEdit() {
@@ -453,11 +532,15 @@
 <div id="myModalCreate" class="modal fade" role="dialog">
     @Html.Partial("Create", Model)
 </div>
+<div id="myModalReport" class="modal fade" role="dialog">
+    @Html.Partial("LocationReport", new Network.Domain.DTO.LocationReportDTO())
+
+</div>
 
 @*
-           
-            <!--ko if: self.selectedRow.selected !== undefined-->
-            <div>
-                @Html.Partial("ReportLocation",Model)
-            </div>
-            <!--/ko-->*@
+
+    <!--ko if: self.selectedRow.selected !== undefined-->
+    <div>
+        @Html.Partial("ReportLocation",Model)
+    </div>
+    <!--/ko-->*@

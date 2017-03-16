@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace Network.Core.Mapping
 {
-    public class FileAttachmentResolver : ValueResolver<ICollection<DocumentFileAttachment>, FileAttachment>
+    public class FileAttachmentResolver : ValueResolver<ICollection<Department>, DepartmentDTO>
     {
-        protected override FileAttachment ResolveCore(ICollection<DocumentFileAttachment> source)
+        protected override DepartmentDTO ResolveCore(ICollection<Department> source)
         {
-            // return source.Select(x => 
-            //              Mapper.Map<DocumentFileAttachmentDTO, FileAttachment>(companies.FirstOrDefault(x => x.CompanyID == userCompany.CompanyID)))
-            //     .ToList();
+            
             return null;
         }
     }

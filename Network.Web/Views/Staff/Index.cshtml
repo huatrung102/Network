@@ -37,6 +37,10 @@
         <th>
             @Html.DisplayNameFor(model => model.StaffCount)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </th>
+        
         <th></th>
     </tr>
     <tbody data-bind='foreach: staffs'>
@@ -62,7 +66,9 @@
             <td>
                 <span class="" data-bind="text: StaffCount">1</span>
             </td>
-           
+            <td>
+                <span class="" data-bind="text: LocationName">1</span>
+            </td>
             <td>
                 <button  data-bind="click: $parent.editView" name="" value=""
                         class="btn btn-xs btn-success">
@@ -87,16 +93,16 @@
     <section class="scripts">
         <script type="text/javascript">
 
-            var DTO = function (data) {               
-                ko.mapping.fromJS(data, null, this);                
+            var dto = function (data) {
+               return  ko.mapping.fromJS(data, null, this);
             }
 
             var MainViewModel = function (json) {
                 var self = this;
                 ko.mapping.fromJS(json, null, this);
-                self.DTO = new DTO(json);
+                self.DTO = new dto(json);
 
-              //  self.defaultDTO = new DTO(json);
+              //  self.defaultDTO = new dto(json);
                 self.staffs = ko.observableArray();
                 self.positions = ko.observableArray();
                 self.departments = ko.observableArray();
@@ -113,22 +119,29 @@
                         url: '@Url.Action("getAllEntity")',
                         async: true,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        var mappedObj = $.map(data, function (item) { return new DTO(item) });
-                        if (mappedObj.length === 0) self.staffs.push(new DTO(json));
-                        else self.staffs(mappedObj);
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return new dto(item);
+                            });
+                            if (mappedObj.length === 0) {
+                                var p = new dto(json);
+                                self.staffs.push(p);
+                            } else self.staffs(mappedObj);
+                        }
 
                     });
                 }
                 self.createView = function () {
-                   
+
                     $('#myModalCreate').modal({
                         backdrop: 'static',
                         keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
-                    
-                    updateSelectUI($("#myModalCreate"));
-                    updateCheckboxUI();
+
+                  //  updateSelectUI($("#myModalCreate"));
+                 //   updateCheckboxUI();
                   //  $("select").chosen('destroy').chosen();
                 }
 
@@ -163,17 +176,21 @@
                 };
 
                 self.loadLocation = function () {
-                    self.locations.removeAll();
+                   self.locations.removeAll();
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("getAllEntity","Location")',
-                        async: true,
+                        async: false,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        $.each(data, function (idx, item) {
-                            self.locations.push(item);
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return  new dto(item);
+                            });
+                            self.locations(mappedObj);
+                        }
 
-                        })
                     });
                 };
                 self.loadDepartment = function () {
@@ -183,11 +200,14 @@
                         url: '@Url.Action("getAllEntity","Department")',
                         async: false,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        $.each(data, function (idx,item) {
-                            self.departments.push(item);
-
-                        })                     
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return new dto(item);
+                            });
+                            self.departments(mappedObj);
+                        }
                     });
                 };
                 self.loadPosition = function () {
@@ -197,7 +217,7 @@
                         url: '@Url.Action("getAllEntity","Position")',
                         async: false,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {                        
+                    }).done(function (data) {
                         $.each(data, function (idx, item) {
                             self.positions.push(item);
 
@@ -205,15 +225,16 @@
                     });
                 };
 
-                self.editView = function (data) {                   
-                    self.selectedDTO(data);                   
+                self.editView = function (data) {
+                    self.selectedDTO(data);
                     $('#myModalEdit').modal({
                         backdrop: 'static',
                         keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
-                  
+
                     updateSelectUI($("#myModalEdit"));
-                    updateCheckboxUI();
+                    self.isLeader(checkIsLeader(data.PositionId()));
+                 //   updateCheckboxUI();
                 }
 
                 self.edit = function (data) {
@@ -244,36 +265,41 @@
 
                     });;
                 };
-                
+
                 self.viewDetail = function (data) {
                     console.log('data:' + data)
                     self.getDetailView({ id: data.DepartmentId() });
                 };
-                               
+
 
                 var checkIsLeader = function (positionId) {
-                    var selectedPosition = $.Enumerable.From(self.positions()).Single(function (x) {                     
+                    var selectedPosition = $.Enumerable.From(self.positions()).Single(function (x) {
                         return x.PositionId === positionId;
 
                     });
-                    if (selectedPosition !== undefined) {                       
+                    if (selectedPosition !== undefined) {
                         return selectedPosition.PositionIsLeader;
                     }
                     return false;
                 }
-                self.checkPositionIsLeader = function (obj, event) {                    
+                self.checkPositionIsLeader = function (obj, event) {
                     if (event.originalEvent) {
                         console.log('user changed');
                     } else {
-                        console.log('programe changed');                        
+                        console.log('programe changed');
                     }
-                    self.isLeader(checkIsLeader(obj.PositionId()));                    
+                    self.isLeader(checkIsLeader(obj.PositionId()));
                 }
-              
+                self.DTO.StaffIsHeadOffice.subscribe(function (newValue) {
+                    console.log('StaffIsHeadOffice:' + self.DTO.StaffIsHeadOffice());
+                    console.log('StaffIsHeadOffice:newValue' + newValue);
+                    
+                })
                 self.loadTable();
                 self.loadDepartment();
                 self.loadPosition();
-              //  self.isLeader(self.positions()[0].PositionIsLeader);
+                self.loadLocation();
+                self.isLeader(self.positions()[0].PositionIsLeader);
 
             }
 

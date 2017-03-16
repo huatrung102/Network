@@ -155,9 +155,22 @@ $(function () {
         }
     };
 
+    ko.bindingHandlers.howManyDay = {
+        update: function (element, valueAccessor) {
+            var value = valueAccessor();
+            var dayMonemnt = moment(value, 'DD/MM/YYYY');
+            var day = 0;
+            if (dayMonemnt._isValid) {
+                day = dayMonemnt.diff(moment([]), 'days');
+            }
+            $(element).removeClass();           
+            $(element).addClass(day <= 0? "label label-danger": "label label-primary");            
+            $(element).text(day);
+        }
+    };
     //ko extend google map
 
-    ///*
+    /*
     ko.bindingHandlers.map1 = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
 
@@ -213,10 +226,7 @@ $(function () {
             /*
            
 
-            var basewindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h2>" + model().LocationName() + "</div></div>"
-            });
-            var infowindow = basewindow;
+            
            
 
             
@@ -227,7 +237,7 @@ $(function () {
            
 
             // $("#" + element.getAttribute("id")).data("mapObj", mapObj);
-            */
+            
         },
         update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
 
@@ -244,14 +254,14 @@ $(function () {
             viewModel._mapMarkerSingle.setPosition(latLng);
             viewModel._mapMarkerSingle.setIcon('Img/star_blue.png');
             //  mapObj
-            //  */
+            
             //  map.setCenter(latLng);
             /*
             
-    */
+    
         }
     };
-
+    */
     ko.bindingHandlers.map = {
         // /*  
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
@@ -266,11 +276,7 @@ $(function () {
                 icon: 'Img/star_red.png',
                 title: title
             });
-
-            google.maps.event.addListener(marker, 'click', function () {
-
-
-            });
+           
             localMap.addListener('center_changed', function () {
                 // 0.5 seconds after the center of the map has changed, pan back to the
                 // marker.
@@ -279,8 +285,7 @@ $(function () {
                 }, 500);
             });
 
-            //  markers.push(marker);
-
+           
 
             if (isEdit) {
                 viewModel.selectedDTO()._mapMarker = marker;
@@ -332,16 +337,24 @@ $(function () {
                 icon: 'Icons/star.png',
                 title: name
             });
-
+            /*
+            var basewindow = new google.maps.InfoWindow({
+                content: "<div class='infoDiv'><h2>" + model().LocationName() + "</div></div>"
+            });
+            var infowindow = basewindow;
+            */
             google.maps.event.addListener(marker, 'click', function () {
-                //viewModel.select();
-
+                // if(viewModel.)
+                locationVM.select(viewModel);
+                locationVM.report();
+               // var test = viewModel;
+                
             });
 
 
-            //markers.push(marker);
+            
             viewModel._mapMarker = marker;
-
+           
         },
         // */
 
@@ -364,22 +377,43 @@ $(function () {
     };
     // */
 
-    //ko extend with https://gist.github.com/jasonhofer/d8d9f6d5feb160b9a28b
-    ko.bindingHandlers.select2 = {
-        init: function (element, valueAccessor, allBindingsAccessor) {
-            var $el = $(element),
-                options = valueAccessor() || {},
-                bindings = allBindingsAccessor() || {};
-            $el.select2(options);
-            if (bindings.value && ko.isSubscribable(bindings.value)) {
-                bindings.value.subscribe(function () {
-                    $el.trigger('change');
-                });
-            }
-            ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-                $el.select2('destroy');
+    ko.bindingHandlers.iCheck = {
+        init: function (element, valueAccessor) {
+            $(element).iCheck({
+                checkboxClass: "icheckbox_minimal-blue",
+                radioClass: "iradio_minimal-blue"
             });
+
+            $(element).on('ifChanged', function () {
+                var observable = valueAccessor();
+                observable($(element)[0].checked);
+            });
+        },
+        update: function (element, valueAccessor) {
+            var value = ko.unwrap(valueAccessor());
+            if (value) {
+                $(element).iCheck('check');
+            } else {
+                $(element).iCheck('uncheck');
+            }
         }
+    };
+    //ko extend with https://github.com/codearachnid/knockout.extend/blob/03fac2da4d80f35601482730d3df3264945d062e/lib/bindingHandlers.select2.js
+    ko.bindingHandlers.select2 = {
+        init: function (el, valueAccessor, allBindingsAccessor, viewModel) {
+            var bindingId = "#" + valueAccessor() + "";
+            ko.utils.domNodeDisposal.addDisposeCallback(el, function () {
+                $(el).select2('destroy');
+            });
+          //  $("#myModalCreate")
+            $(el).select2({
+                dropdownParent: $(bindingId)
+            });
+        },
+        update: function(ele) {
+        
+        $(ele).trigger('change');
+    }
     };
     //end 
     var Ultra = function () {

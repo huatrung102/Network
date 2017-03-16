@@ -17,7 +17,7 @@ namespace Network.Web.Controllers
     public class PartnerController : BaseController<IPartnerService,Partner,Guid>
     {
        // public IEnumerable<Person> Persons;
-        private IPersonService _IPersonService;
+       // private IPersonService _IPersonService;
         
         public PartnerController(): base() {
             _IService = new PartnerService(UnitOfWork);
@@ -32,13 +32,14 @@ namespace Network.Web.Controllers
             
         }
 
-        public JsonResult getAllEntity()
+        public string getAllEntity()
         {
             var dto = _IService.GetAllToView()
                         .Select(p => _IService.getMapperDTO<PartnerDTO>(p))                        
-                        .ToList();                  
-                     
-            return Json(dto, JsonRequestBehavior.AllowGet);
+                        .ToList();
+
+            var json = MvcHelper.SerializeObject(dto, Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            return json;
         }
         // GET: Partner/Details/5
         public ActionResult Details(int id)
@@ -48,16 +49,11 @@ namespace Network.Web.Controllers
         }
 
         // GET: Partner/Create
-        public ActionResult Create()
-        {
-            //ViewBag.PartnerTypeEnum =  EType.PartnerTypeEnum
-          //  ViewBag.PersonId = new SelectList(_IPersonService.GetAllToView(),"PersonId","PersonName") ;
-            return View(new PartnerDTO());
-        }
+       
         private Partner getEntityFromDto(string dto)
         {
-            //PartnerDTO dtoObj = MvcHelper.DeserializeObject<PartnerDTO>(dto);
-            Partner p = _IService.getFromMapperDTO(dto);          
+            PartnerDTO dtoObj = MvcHelper.DeserializeObject<PartnerDTO>(dto);
+            Partner p = _IService.getFromMapperDTO(dtoObj);          
             return p;
         }
         // POST: Partner/Create
@@ -101,7 +97,7 @@ namespace Network.Web.Controllers
 
             try
             {
-                Partner p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Partner p = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 p.IsDeleted = true;
                 _IService.Update(p);
 

@@ -20,11 +20,13 @@ namespace Network.Web.Controllers
             _IService = new DepartmentService(UnitOfWork);
 
         }
-        public JsonResult getAllEntity()
+        public string getAllEntity()
         {
             var dto = _IService.GetAllToView().Select(p => _IService.getMapperDTO<DepartmentDTO>(p)).ToList();
 
-            return Json(dto, JsonRequestBehavior.AllowGet);
+            var json = MvcHelper.SerializeObject(dto, Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            return json;
+
         }
         public ActionResult Create()
         {
@@ -75,7 +77,7 @@ namespace Network.Web.Controllers
         {
             try
             {
-                Department l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Department l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 l.IsDeleted = true;
                 _IService.Update(l);
 

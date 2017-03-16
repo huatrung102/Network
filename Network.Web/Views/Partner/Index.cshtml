@@ -13,8 +13,7 @@
 
 <p>
 
-    <a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal"
-       data-target="#myModalCreate" data-bind="click: function(){createView();} ">Create New</a>
+    <a href="#"  data-bind="click: function(){createView();} ">Create New</a>
 
 </p>
 <table class="table">
@@ -24,13 +23,13 @@
             @Html.DisplayNameFor(model => model.PartnerName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PartnerPhone)
+            @Html.DisplayNameFor(model => model.PartnerPersonName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PartnerType)
+            @Html.DisplayNameFor(model => model.PartnerPersonPhone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PersonName)
+            @Html.DisplayNameFor(model => model.PartnerPersonAddress)
         </th>
 
         <th></th>
@@ -41,17 +40,16 @@
                 <span class="" data-bind="text: PartnerName">1</span>
             </td>
             <td>
-                <span class="" data-bind="text: PartnerPhone">1</span>
+                <span class="" data-bind="text: PartnerPersonName()? PartnerPersonName : 'N/A'">1</span>
             </td>
             <td>
-                <span class="" data-bind="text: PartnerType">1</span>
+                <span class="" data-bind="text: PartnerPersonPhone">1</span>
             </td>
             <td>
-                <span class="" data-bind="text: PersonName? PersonName : 'N/A'">1</span>
+                <span class="" data-bind="text: PartnerPersonAddress">1</span>
             </td>
             <td>
-                <button data-backdrop="static" data-keyboard="false" data-toggle="modal"
-                        data-target="#myModalEdit" data-bind="click: function(){$root.editView();} " name="" value=""
+                <button data-bind="click: function(){$root.editView();} " name="" value=""
                         class="btn btn-xs btn-success">
                     Edit
                 </button>
@@ -73,14 +71,14 @@
     <section class="scripts">
         <script type="text/javascript">
 
-            var DTO = function (data) {
-                ko.mapping.fromJS(data, null, this);
+            var dto = function (data) {
+               return ko.mapping.fromJS(data, null, this);
             }
 
             var MainViewModel = function (json) {
                 var self = this;
                 ko.mapping.fromJS(json, null, this);
-                self.DTO = new DTO(json);
+                self.DTO = new dto(json);
                 
                 self.partners = ko.observableArray();         
                 self.partnerType = ko.observableArray(JSON.parse('@(Html.EnumToJson<EType.PartnerTypeEnum>())'));
@@ -88,38 +86,32 @@
 
                self.loadTable = function () {
                     self.partners.removeAll();
-
                     $.ajax({
                         method: "GET",
                         url: '@Url.Action("getAllEntity")',
                         async: true,
                         contentType: "application/json; charset=utf-8",
-                    }).done(function (data) {
-                        var mappedObj = $.map(data, function (item) {
-                            return new DTO(item);
-                        });
-                        if (mappedObj.length === 0) {
-                            var p = new DTO(json);
-                          //  p.DocumentFileAttachments = ko.observableArray();
-                            self.partners.push(p);
+                    }).done(function (datas) {
+                        var data = JSON.parse(datas);
+                        if (data.length > 0) {
+                            var mappedObj = $.map(data, function (item) {
+                                return new dto(item);
+                            });
+                            self.partners(mappedObj);
                         }
-
-                        else self.partners(mappedObj);
                     });
                 }
                 self.createView = function () {
-                    $('#myModalCreate').modal('show');
-                    $("select").select2({
-                        dropdownParent: $("#myModalCreate")
+                    $('#myModalCreate').modal({
+                        backdrop: 'static',
+                        keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
+
                    
                 }
-                self.createFileAttachment = function () {
-                    self.DTO.DocumentFileAttachments.push(new DTO(JSON.parse(@Html.ModelToJSon(
-                    new Network.Domain.DTO.DocumentFileAttachmentDTO()))))
-                }
+               
                 self.create = function () {
-                    self.DTO.StaffId(UUID());
+                    self.DTO.PartnerId(UUID());
 
                     var controller = '@ViewContext.RouteData.Values["Controller"].ToString()';
                     var messageCreateOK = String.format(Ultra.messageCreateOK, controller);
@@ -150,10 +142,11 @@
                 
                 self.editView = function (data) {
                     self.selectedDTO(data);
-                    $("select").select2({
-                        dropdownParent: $("#myModalEdit")
+                   
+                    $('#myModalEdit').modal({
+                        backdrop: 'static',
+                        keyboard: false  // to prevent closing with Esc button (if you want this too)
                     });
-
                 }
 
                 self.edit = function (data) {

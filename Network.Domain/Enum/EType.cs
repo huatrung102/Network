@@ -28,9 +28,10 @@ namespace Network.Domain.Enum
 
         public enum PartnerTypeEnum
         {
-            [Display(Name ="Cá nhân")]
+
+            [LocalizedDescription("PartnerTypeEnum_CANHAN", typeof(GlobalResource))]
             CANHAN = 0,
-            [Display(Name = "Công ty")]
+            [LocalizedDescription("PartnerTypeEnum_CONGTY", typeof(GlobalResource))]
             CONGTY
             
         }

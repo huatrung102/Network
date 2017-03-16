@@ -32,7 +32,7 @@ namespace Network.Web.Controllers
         [HttpPost]
         public string GetPatrialView_Detail(string id)
         {
-            Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+            Person p = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
             string html =  MvcHelper.RenderViewToString(this.ControllerContext, "_Detail", p);
             return html;
         }
@@ -74,7 +74,7 @@ namespace Network.Web.Controllers
             try
             {
 
-                Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Person p = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 return View(p);
             }
             catch (Exception)
@@ -88,7 +88,7 @@ namespace Network.Web.Controllers
             try
             {
 
-                Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Person p = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 return View(p);
             }
             catch (Exception)
@@ -118,7 +118,7 @@ namespace Network.Web.Controllers
             try
             {
                 //delete person but set isDeleted = true
-                Person p = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Person p = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 p.IsDeleted = true;
                 _IService.Update(p);
 

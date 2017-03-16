@@ -163,7 +163,7 @@ namespace Network.Web.Controllers
         {
             try
             {
-                Document l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Document l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 l.IsDeleted = true;
                 _IService.Update(l);
 

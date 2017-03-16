@@ -20,9 +20,13 @@ namespace Network.Domain.DTO
         public bool StaffExistHeadOffice { get; set; }
         public Guid DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        //for report
+        public DepartmentDTO Department { get; set; }
         public Guid LocationId { get; set; }
         public string LocationName { get; set; }
 
+        
+       
         public virtual Guid PositionId { get; set; }
 
       //  public virtual Position Position }

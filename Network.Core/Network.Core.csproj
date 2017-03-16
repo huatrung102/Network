@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\IProvinceService.cs" />
     <Compile Include="Interfaces\IStaffService.cs" />
     <Compile Include="Mapping\FileAttachmentResolver.cs" />
+    <Compile Include="Mapping\LocationReportResolver.cs" />
     <Compile Include="Mapping\ModelMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

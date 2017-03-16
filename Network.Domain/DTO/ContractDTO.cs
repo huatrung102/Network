@@ -15,6 +15,7 @@ namespace Network.Domain.DTO
             this.ContractMoneyType = EType.MoneyEnum.VND;
             this.ContractFileAttachments = new HashSet<ContractFileAttachment>();
             this.ContractStatus = EType.StatusEnum.Available;
+            this.ContractId = Guid.NewGuid();
 
         }
 

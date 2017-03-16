@@ -9,7 +9,7 @@ namespace Network.Common.Helper
     public class GuidHelper
     {
         private static readonly string zeroGuid = "00000000-0000-0000-0000-000000000000";
-        public static Guid ConvertStrToGuid(string guid)
+        private static Guid ConvertStrToGuid(string guid)
         {
             try
             {

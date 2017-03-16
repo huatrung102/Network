@@ -23,13 +23,16 @@ namespace Network.Domain.Entity
         [Index("StaffEmailIndex", IsUnique = true)]
         public string StaffEmail { get; set; }
         public bool StaffIsHeadOffice { get; set; }
-
-        public virtual Guid DepartmentId { get; set; }
+        [ForeignKey("Department")]
+        public Guid DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }
-
-        public virtual Guid PositionId { get; set; }        
+        [ForeignKey("Position")]
+        public Guid PositionId { get; set; }        
         public virtual Position Position { get; set; }
+        [ForeignKey("Location")]
+        public  Guid LocationId { get; set; }
+        public virtual Location Location { get; set; }
         //số lượng có của staff default = 1
         public int StaffCount { get; set; }
         //loại 

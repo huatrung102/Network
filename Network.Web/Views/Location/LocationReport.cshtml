@@ -1,0 +1,212 @@
+﻿@model Network.Domain.DTO.LocationReportDTO
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <!--ko if: ko.utils.unwrapObservable(reportDTO) != null-->
+    <div class="modal-content" data-bind="with: reportDTO">
+
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">
+                <span data-bind="text: LocationName"></span>'s Summary
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal" >
+                <div class="form-group">
+                    <div class="col-md-12">
+                        Người đừng đầu:
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.StaffHeadOffice.StaffName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="text: StaffHeadOffice.StaffName"></span>
+                            (<span  data-bind="text: StaffHeadOffice.DepartmentName"></span>)
+                        </div>
+                       
+                    </div>
+                   
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        Danh sách cán bộ:
+                    </div>
+                    <!--
+                    <div class="col-md-12" data-bind="foreach: Departments">
+                        -->
+                    <table class="col-md-12 table table-striped">
+                        <tr>
+                            <th>Tên Cán bộ</th>
+                            <th>Chức vụ</th>
+                            <th>Phòng ban</th>
+                            <th>Khối</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        <tbody data-bind="foreach: Staffs().sort(function (l, r) { return l.DepartmentName() > r.DepartmentName() ? 1 : -1 })">
+                            <tr>
+                                <td class="col-md-4"><span data-bind="text: StaffName"></span></td>
+                                <td class="col-md-2"><span data-bind="text: PositionName"></span></td>
+                                <td class="col-md-4"><span data-bind="text: DepartmentName"></span></td>
+                                <td class="col-md-4"><span data-bind="text: $root.LookupEnum($root.departmentGroup(),Department.DepartmentGroup())"></span></td>
+                                <td class="col-md-2 text-center" ><span data-bind="text: StaffCount"></span></td>
+                            </tr>
+                        </tbody>
+                        <tr>
+                            <th colspan="4" class="text-center">Tổng cộng</th>
+                            <th class="text-center"><span data-bind="text: StaffTotalCount"></span></th>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        Giá thuê:
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.ContractBalance, htmlAttributes: new { @class = "control-label col-md-3" })
+                        </div>
+                        <span class="col-md-8" data-bind="text: $root.numberWithCommas(ContractBalance())"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.ContractDeposit, htmlAttributes: new { @class = "control-label col-md-3" })
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="text: ContractDeposit">
+                            </span>(tháng) * <span data-bind="text: $root.numberWithCommas(ContractBalance())"></span>
+                            = <span data-bind="text:$root.numberWithCommas(parseInt(ContractBalance()) * parseFloat(ContractDeposit()))"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group" data-bind="with: Documents()[0]">
+                    <div class="col-md-12">
+                        <h5> Hồ sơ đang hiệu lực:</h5>
+                    </div>
+                    
+                    <div class="col-md-12">
+
+                        <div class="col-md-6">
+                            <label class="col-md-4">Số hồ sơ</label><span class="col-md-8" data-bind="text: DocumentNumber"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-md-4">Ghi chú:</label><span class="col-md-8" data-bind="text: DocumentDescription"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        Danh sách File đang hiệu lực:
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Loại File</th>
+                                    <th>Tên File</th>
+                                    <th>Ngày hiệu lực</th>
+
+                                </tr>
+                                <tbody data-bind="foreach: DocumentFileAttachments().sort(function (l, r) { return l.DepartmentName() > r.DepartmentName() ? 1 : -1 })">
+                                    <tr>
+
+                                        <td class="col-md-3"><span data-bind="text: $root.LookupEnum($root.documentType(),DocumentType()) "></span></td>
+                                        <!--
+                <td class="col-md-3"><span data-bind="text: DocumentType "></span></td>
+                    -->
+                                        <td class="col-md-6">
+                                            <a href="javascript:;"><span data-bind="text: FileName"></span></a>
+                                        </td>
+                                        <td class="col-md-3"><span data-bind="text: FileAttachmentValidDate"></span></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="form-group" data-bind="with: Contracts()[0]">
+                    <div class="col-md-12">
+                        <h5>Hợp đồng đang hiệu lực:</h5>
+                        </div>
+                        
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <label class="col-md-5">Tên hợp đồng</label><span class="col-md-7" data-bind="text: ContractName"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-md-5">Số hợp đồng</label><span class="col-md-7" data-bind="text: ContractNumber"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-md-5">Ngày hiệu lực</label><span class="col-md-7" data-bind="text: ContractValidDate"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-md-5">Ngày hết hiệu lực</label>
+                                <span class="col-md-7" data-bind="text: ContractInvalidDate"></span>
+                                
+                               
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <i class="col-md-12">There are <span sstyle="font-size: 14px;" data-bind="howManyDay: moment(ContractInvalidDate()).format('DD/MM/YYYY')"></span> days left until expiration</i>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            Danh sách File đang hiệu lực:
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Loại File</th>
+                                        <th>Tên File</th>
+                                        <th>Ngày hiệu lực</th>
+                                       <!-- <th>Ngày hết hiệu lực</th>-->
+                                    </tr>
+                                    <tbody data-bind="foreach: ContractFileAttachments">
+                                        <tr>
+
+                                            <td class="col-md-2">
+                                            <span data-bind="text: $root.LookupEnum($root.contractType(),ContractType()) "></span>
+                                               
+                                            </td>
+                                            <!--
+                <td class="col-md-2"><span data-bind="text: ContractType "></span></td>
+                    -->
+                                            <td class="col-md-7">
+                                                <a target="_blank" data-bind="click: function(){ $root.viewFile(FileAttachmentId(),FileName());}" href="#"><span data-bind="text: FileName"></span></a>
+                                            </td>
+                                            <td class="col-md-3">
+                                                <span data-bind="text: moment(FileAttachmentValidDate()).format('DD/MM/YYYY') "></span>
+                                                
+                                            </td>
+                                        <!--    <td class="col-md-5"><span data-bind="text: FileAttachmentInvalidDate"></span></td>-->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+
+            </div>
+            
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+
+        </div>
+
+    </div>
+    <!--/ko-->
+</div>
+
+
+

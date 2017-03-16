@@ -231,6 +231,12 @@
   <data name="PartnerHp_PartnerHpType_Old" xml:space="preserve">
     <value>Old</value>
   </data>
+  <data name="PartnerTypeEnum_CANHAN" xml:space="preserve">
+    <value>Personal</value>
+  </data>
+  <data name="PartnerTypeEnum_CONGTY" xml:space="preserve">
+    <value>Company</value>
+  </data>
   <data name="SchedulePaymentEnum_MONTHLY" xml:space="preserve">
     <value>Monthly</value>
   </data>

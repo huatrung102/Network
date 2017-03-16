@@ -31,11 +31,16 @@ namespace Network.Web.Controllers
             return json;
         }
 
-        
-        public ActionResult Create()
+        [HttpPost]
+        public string getLocationReportPatrialView(string data)
         {
-
-            return View();
+            Location l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(data));
+            LocationReportDTO report = _IService.getMapperDTO<LocationReportDTO>(l);
+            var json = MvcHelper.SerializeObject(report, Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            return json;
+            // string html = MvcHelper.RenderViewToString(this.ControllerContext, "LocationReport", report);
+          //  return html;
+            
         }
 
         private Location getLocationFromDto(string dto)
@@ -86,7 +91,7 @@ namespace Network.Web.Controllers
         {
             try
             {                
-                Location l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Location l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 l.IsDeleted = true;
                 _IService.Update(l);
 

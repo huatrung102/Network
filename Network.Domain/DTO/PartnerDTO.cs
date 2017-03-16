@@ -18,13 +18,15 @@ namespace Network.Domain.DTO
         //loại cá nhân hay công ty
         public EType.PartnerTypeEnum PartnerType { get; set; }
         public Guid? PersonId { get; set; }
-        public string PersonName { get; set; }
+        public string PartnerPersonName { get; set; }
         
-        public string PersonPhone { get; set; }
+        public string PartnerPersonPhone { get; set; }
         
         public string PersonPosition { get; set; }
+        public string PartnerRepresentation { get; set; }
 
-     //   public virtual ICollection<Partner> Partners { get; set; }
+        public string PartnerPersonAddress { get; set; }
+        //   public virtual ICollection<Partner> Partners { get; set; }
 
     }
 }

@@ -15,14 +15,26 @@
                 <h4>Create</h4>
                 <hr />
                 
-
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                      <!--  <select style="width:400px!important" data-bind="options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select> -->
+                        <select style="width:400px!important" data-bind="select2: 'myModalCreate',options: $root.locations, optionsText: 'LocationName', optionsValue: 'LocationId', value: LocationId" class="col-xs-12 "></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <select style="width:400px!important" data-bind="select2: 'myModalCreate',options: $root.departments, optionsText: 'DepartmentName', optionsValue: 'DepartmentId', value: DepartmentId" class="col-xs-12 "></select>
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PositionId, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        <select style="width:400px!important" data-bind="options: $root.positions, optionsText: 'PositionName', optionsValue: 'PositionId', value: PositionId, event: {change: $root.checkPositionIsLeader }" class="col-xs-12 "></select>
+                        <select style="width:400px!important" data-bind="select2: 'myModalCreate',options: $root.positions, optionsText: 'PositionName', optionsValue: 'PositionId', value: PositionId, event: {change: $root.checkPositionIsLeader }" class="col-xs-12 "></select>
                     </div>
                 </div>
-
+                
                 <div class="form-group">
                     @Html.LabelFor(model => model.StaffName, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
@@ -43,18 +55,14 @@
                         <input class="form-control" data-bind="value: StaffEmail" />
                     </div>
                 </div>
-
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="form-group" data-bind="visible:($root.isLeader())">
+                    @Html.LabelFor(model => model.StaffIsHeadOffice, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        <select style="width:400px!important" data-bind="options: $root.departments, optionsText: 'DepartmentName', optionsValue: 'DepartmentId', value: DepartmentId" class="col-xs-12 "></select>
+                        <div class="checkbox">
+                            <input type="checkbox" class="checkbox" data-bind="iCheck: StaffIsHeadOffice" />Head Office
+                        </div>
                     </div>
                 </div>
-
-
-
 
                 <div class="form-group" data-bind="visible:!($root.isLeader())">
                     @Html.LabelFor(model => model.StaffCount, htmlAttributes: new { @class = "control-label col-md-3" })
@@ -62,14 +70,7 @@
                         <input class="form-control" data-bind="value: StaffCount" />
                     </div>
                 </div>
-                <div class="form-group" data-bind="visible:!($root.isLeader())">
-                    @Html.LabelFor(model => model.StaffIsHeadOffice, htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <div class="checkbox">
-                            <input type="checkbox" class="checkbox" data-bind="checked: StaffIsHeadOffice" />Head Office
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
 

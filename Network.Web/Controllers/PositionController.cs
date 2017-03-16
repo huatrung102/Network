@@ -80,7 +80,7 @@ namespace Network.Web.Controllers
         {
             try
             {
-                Position l = _IService.GetById(GuidHelper.ConvertStrToGuid(id));
+                Position l = _IService.GetById(GuidHelper.CheckAndRefreshGuid(id));
                 l.IsDeleted = true;
                 _IService.Update(l);
 
